@@ -1,0 +1,30 @@
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\bin\Debug\InstalledAppInfo\AppIcon.png
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\bin\Debug\Resources\ColorWheel.png
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\bin\Debug\PhotoPaint.exe
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\bin\Debug\PhotoPaint.pdb
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\bin\Debug\PhotoPaint.exe.CodeAnalysisLog.xml
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\bin\Debug\PhotoPaint.exe.lastcodeanalysissucceeded
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Debug\Window1.g.cs
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Debug\App.g.cs
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Debug\PhotoPaint_Content.g.cs
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Debug\PhotoPaint_MarkupCompile.cache
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Debug\PhotoPaint_MarkupCompile.lref
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Debug\Window1.baml
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Debug\PhotoPaint.g.resources
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Debug\PhotoPaint.exe
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Debug\PhotoPaint.pdb
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\bin\Debug\InstalledAppInfo\AppIcon.png
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\bin\Debug\Resources\ColorWheel.png
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\bin\Debug\PhotoPaint.exe
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\bin\Debug\PhotoPaint.pdb
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\bin\Debug\PhotoPaint.exe.CodeAnalysisLog.xml
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\bin\Debug\PhotoPaint.exe.lastcodeanalysissucceeded
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\obj\Debug\Window1.g.cs
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\obj\Debug\App.g.cs
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\obj\Debug\PhotoPaint_Content.g.cs
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\obj\Debug\PhotoPaint_MarkupCompile.cache
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\obj\Debug\PhotoPaint_MarkupCompile.lref
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\obj\Debug\Window1.baml
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\obj\Debug\PhotoPaint.g.resources
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\obj\Debug\PhotoPaint.exe
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint - Copy\obj\Debug\PhotoPaint.pdb

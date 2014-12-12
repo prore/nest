@@ -1,0 +1,11 @@
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\bin\Release\InstalledAppInfo\AppIcon.png
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\bin\Release\Resources\ColorWheel.png
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\bin\Release\PhotoPaint.exe
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Release\Window1.g.cs
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Release\App.g.cs
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Release\PhotoPaint_Content.g.cs
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Release\PhotoPaint_MarkupCompile.cache
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Release\PhotoPaint_MarkupCompile.lref
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Release\Window1.baml
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Release\PhotoPaint.g.resources
+C:\Users\media2\prore\SDKSamples\WPF\PhotoPaint\obj\Release\PhotoPaint.exe
