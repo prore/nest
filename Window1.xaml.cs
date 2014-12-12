@@ -103,14 +103,59 @@ namespace PhotoPaint
             // These are default OS folders that will always be in these locations
             // unless the user has deliberately moved them.
             string publicFoldersPath = Environment.GetEnvironmentVariable("public");
-            
-            //LoadImg(publicFoldersPath + @"\Pictures\Sample Pictures\Desert.jpg");
-            //LoadImg(publicFoldersPath + @"\Pictures\Sample Pictures\Jellyfish.jpg");
-            LoadAllImgFrom(publicFoldersPath + @"\Pictures\Sample Pictures");
+
+            string path = publicFoldersPath + @"\Pictures\Sample Pictures";
+            LoadAllImgFrom(path);
+            LoadAllTextFrom(path);
+
 
         }
 
-        //TODO
+
+        private void CreateTextItem(string text)
+        {
+            Label textItem = new Label();
+            // Set the content of the label.
+            textItem.Content = text;
+            //TODO: max größe
+            textItem.Height = 100;
+            textItem.Width = 200;
+            textItem.MinWidth = 50;
+            textItem.MaxWidth = 250;
+            // Add the label to the ScatterView control.
+            // It is automatically wrapped in a ScatterViewItem control.
+            MainScatterView.Items.Add(textItem);
+        }
+
+        private void LoadAllTextFrom(string textDirectoryPath)
+        {
+            string path = textDirectoryPath + @"\TextFile.txt";
+            string line; 
+ 
+            if (File.Exists(path))
+            {
+                StreamReader file = null;
+                try
+                {
+                    file = new StreamReader(path, System.Text.Encoding.UTF8);
+                   
+                    while ((line = file.ReadLine()) != null)
+                    {
+                        CreateTextItem(line);
+                    }
+                }
+                catch (Exception e)
+                {
+                    CreateTextItem("The file could not be read:" + (e.Message));
+                }
+                finally
+                {
+                    if (file != null)
+                        file.Close();
+                }
+            } 
+        }
+      
         private void LoadImg(string path)
         {
             ScatterViewItem photoPad = new ScatterViewItem();
