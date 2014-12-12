@@ -14,6 +14,7 @@ using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
+using System.Linq;
 
 namespace PhotoPaint
 {
@@ -133,10 +134,16 @@ namespace PhotoPaint
         {
             if (Directory.Exists(imgDirectoryPath))
             {
+                var filteredFiles = Directory
+                .GetFiles(imgDirectoryPath, "*.*")
+                .Where(file => file.ToLower().EndsWith("png") || file.ToLower().EndsWith("jpg"))
+                .ToList();
+
                 string[] files = Directory.GetFiles(imgDirectoryPath,  "*.jpg");
-                for(int i = 0; i<files.Length; i++) 
+
+                for (int i = 0; i < filteredFiles.Count; i++) 
                 {
-                    LoadImg(files[i]);
+                    LoadImg(filteredFiles[i]);
                 }
             }
         }
@@ -155,6 +162,7 @@ namespace PhotoPaint
             image.Source = (ImageSource)converter.ConvertFromString(path);
             return image;
         }
+
 
         /// <summary>
         /// Adds handlers for window availability events.
@@ -211,5 +219,5 @@ namespace PhotoPaint
            // StopMovie();
         }
     }
-
+   
 }
