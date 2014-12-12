@@ -91,15 +91,6 @@ namespace PhotoPaint
         }
 
         /// <summary>
-        /// Calculate the maximum size of photo based on logical dpi
-        /// </summary>
-       /* private void UpdatePhotoSize()
-        {
-            PhotoPadSVI.MaxWidth = Photo.Source.Width / (InteractiveSurface.PrimarySurfaceDevice.LogicalDpiX / 96);
-            PhotoPadSVI.MaxHeight = Photo.Source.Height / (InteractiveSurface.PrimarySurfaceDevice.LogicalDpiX / 96);
-        }
-        */
-        /// <summary>
         /// Called when the application is finished initalizing
         /// </summary>
         /// <param name="e"></param>
@@ -112,13 +103,14 @@ namespace PhotoPaint
             // unless the user has deliberately moved them.
             string publicFoldersPath = Environment.GetEnvironmentVariable("public");
             
-            OurPhotoPad(publicFoldersPath + @"\Pictures\Sample Pictures\Desert.jpg");
-            OurPhotoPad(publicFoldersPath + @"\Pictures\Sample Pictures\Jellyfish.jpg");
+            //LoadImg(publicFoldersPath + @"\Pictures\Sample Pictures\Desert.jpg");
+            //LoadImg(publicFoldersPath + @"\Pictures\Sample Pictures\Jellyfish.jpg");
+            LoadAllImgFrom(publicFoldersPath + @"\Pictures\Sample Pictures");
 
         }
 
         //TODO
-        private void OurPhotoPad(string path)
+        private void LoadImg(string path)
         {
             ScatterViewItem photoPad = new ScatterViewItem();
             //photoPad.Name="a";
@@ -135,6 +127,18 @@ namespace PhotoPaint
 
             MainScatterView.Items.Add(photoPad);
             
+        }
+
+        private void LoadAllImgFrom(string imgDirectoryPath)
+        {
+            if (Directory.Exists(imgDirectoryPath))
+            {
+                string[] files = Directory.GetFiles(imgDirectoryPath,  "*.jpg");
+                for(int i = 0; i<files.Length; i++) 
+                {
+                    LoadImg(files[i]);
+                }
+            }
         }
 
         /// <summary>
