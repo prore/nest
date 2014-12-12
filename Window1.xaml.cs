@@ -141,44 +141,6 @@ namespace PhotoPaint
             }
         }
 
-        /// <summary>
-        /// Sets the content for the PhotoCanvas.
-        /// </summary>
-        /// <param name="publicPhotosPath">Path to public photos.</param>
-  /*      private void SetPhotoPadContent(string publicPhotosPath)
-        {
-
-            if (Directory.Exists(publicPhotosPath))
-            {
-                // Use this images if it exists.
-                string targetPhotoPath = publicPhotosPath + @"\Chrysanthemum.jpg";
-                /*if (File.Exists(targetPhotoPath))
-                {
-                    // Target image exists, use it
-                    Photo.Source = new BitmapImage(new Uri(targetPhotoPath));
-                }
-                else
-                {
-                    // Target image does not exist, use the first JPG found in the directory.
-                    string[] files = Directory.GetFiles(publicPhotosPath, "*.jpg");
-                    if (files.Length > 0)
-                    {
-                        Photo.Source = new BitmapImage(new Uri(files[0]));
-                    }
-                //}       
-            }
-
-            if (Photo.Source == null)
-            {
-                // If there aren't any images at all, use a blank canvas.
-                PostcardCanvas.Background = Brushes.White;
-            }
-            else
-            {
-                UpdatePhotoSize();
-            }
-        }
-*/
         #endregion Initalization
         
         /// <summary>
