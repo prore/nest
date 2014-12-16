@@ -118,6 +118,7 @@ namespace PhotoPaint
           //  if (File.Exists(targetVideoPath))
           //  {
                 ScatterViewItem moviepad = new ScatterViewItem();
+            
                 MediaElement video = new MediaElement();
                 moviepad.Content = video;
                 // Target movie exists, use it.
@@ -129,7 +130,11 @@ namespace PhotoPaint
                 video.EndInit();
                 video.Position = TimeSpan.Zero;
                 video.Play();
-                MainScatterView.Items.Add(moviepad);
+                VideoDrawing vd = new VideoDrawing();
+               VisualBrush vb = new VisualBrush();
+                vb.Visual = video;
+                mWindow.Background = vb;
+          //      MainScatterView.Items.Add(video);
 
          //   }
 
