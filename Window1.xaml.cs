@@ -126,7 +126,12 @@ namespace PhotoPaint
             
                 VideoDrawing vd = new VideoDrawing();
                 VisualBrush vb = new VisualBrush();
+                
+
                 vb.Visual = mBackground;
+                vb.Stretch = Stretch.Fill;
+                vb.TileMode = TileMode.None;
+                
                 mWindow.Background = vb;
           //      MainScatterView.Items.Add(video);
 
@@ -197,7 +202,7 @@ namespace PhotoPaint
             img1.Source = new BitmapImage(new Uri(path));
             
             photoPad.Content = img1;
-
+            
             MainScatterView.Items.Add(photoPad);
             
         }
