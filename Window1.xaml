@@ -2,15 +2,15 @@
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                  xmlns:s="http://schemas.microsoft.com/surface/2008" 
-                 xmlns:pp="clr-namespace:PhotoPaint" 
+                 
                  Title="PhotoPaint">
 
 
     <!-- Window Content -->
     <Grid>
-
-        <s:ScatterView Name="MainScatterView">
-
+            
+        <s:ScatterView Name="MainScatterView" Margin="-21,44,21,-44" >
+        
         </s:ScatterView>
     </Grid>
 

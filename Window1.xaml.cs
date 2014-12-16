@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+
 using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
@@ -109,6 +110,36 @@ namespace PhotoPaint
             LoadAllTextFrom(path);
 
 
+            string targetVideoPath = publicFoldersPath + @"\Videos\Sample Videos";
+
+            
+            
+            
+          //  if (File.Exists(targetVideoPath))
+          //  {
+                ScatterViewItem moviepad = new ScatterViewItem();
+                MediaElement video = new MediaElement();
+                moviepad.Content = video;
+                // Target movie exists, use it.
+                video.BeginInit();
+                video.LoadedBehavior = video.UnloadedBehavior = MediaState.Manual;
+            //    video.Source = new Uri(path + @"\Untitled.png");
+                video.Source = new Uri(targetVideoPath + @"\video.mp4");
+
+                video.EndInit();
+                video.Position = TimeSpan.Zero;
+                video.Play();
+                MainScatterView.Items.Add(moviepad);
+
+         //   }
+
+         //   Movie.Play();  
+
+        }
+
+        private void currentMediaElement_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        //    video.Play();
         }
 
 
@@ -158,6 +189,7 @@ namespace PhotoPaint
       
         private void LoadImg(string path)
         {
+
             ScatterViewItem photoPad = new ScatterViewItem();
             //photoPad.Name="a";
             photoPad.Height = 320/2;
@@ -241,6 +273,19 @@ namespace PhotoPaint
             // Enable audio for our movie.
             //Movie.IsMuted = false;
         }
+
+
+       /// <summary>
+       /// Handles the MediaEnded event for the MovieCanvas video.
+       /// </summary>
+       /// <param name="sender">The MediaElement that raised the event.</param>
+       /// <param name="args">The arguments for the event.</param>
+       private void OnMediaEnded(object sender, RoutedEventArgs args)
+       {
+           //mediaEnded = true;
+           // Reset();
+       }
+
 
         /// <summary>
         /// This is called when the user can see but not interact with the application's window.
