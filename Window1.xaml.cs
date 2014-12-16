@@ -41,8 +41,9 @@ namespace PhotoPaint
         /// Duration of playback loop (in seconds) when no video is present.
         /// </summary>
         private const int duration = 12;
-        
-        
+        private MediaElement video;
+        public event RoutedEventHandler mMediaEnded;
+
         /// <summary>
         /// Key used to track strokes in a touch device's user data.
         /// </summary>
@@ -109,30 +110,23 @@ namespace PhotoPaint
             LoadAllImgFrom(path);
             LoadAllTextFrom(path);
 
-
+           
             string targetVideoPath = publicFoldersPath + @"\Videos\Sample Videos";
+            
+          //      video = new MediaElement();
+                mBackground.BeginInit();
+                mBackground.LoadedBehavior = mBackground.UnloadedBehavior = MediaState.Manual;
+             //   mBackground.MediaEnded += mMediaEnded; 
+                mBackground.Source = new Uri(targetVideoPath + @"\video.mp4");
 
+                mBackground.EndInit();
+                mBackground.Position = TimeSpan.Zero;
+                mBackground.Play();
+                
             
-            
-            
-          //  if (File.Exists(targetVideoPath))
-          //  {
-                ScatterViewItem moviepad = new ScatterViewItem();
-            
-                MediaElement video = new MediaElement();
-                moviepad.Content = video;
-                // Target movie exists, use it.
-                video.BeginInit();
-                video.LoadedBehavior = video.UnloadedBehavior = MediaState.Manual;
-            //    video.Source = new Uri(path + @"\Untitled.png");
-                video.Source = new Uri(targetVideoPath + @"\video.mp4");
-
-                video.EndInit();
-                video.Position = TimeSpan.Zero;
-                video.Play();
                 VideoDrawing vd = new VideoDrawing();
-               VisualBrush vb = new VisualBrush();
-                vb.Visual = video;
+                VisualBrush vb = new VisualBrush();
+                vb.Visual = mBackground;
                 mWindow.Background = vb;
           //      MainScatterView.Items.Add(video);
 
@@ -142,10 +136,6 @@ namespace PhotoPaint
 
         }
 
-        private void currentMediaElement_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-        //    video.Play();
-        }
 
 
         private void CreateTextItem(string text)
@@ -285,10 +275,12 @@ namespace PhotoPaint
        /// </summary>
        /// <param name="sender">The MediaElement that raised the event.</param>
        /// <param name="args">The arguments for the event.</param>
-       private void OnMediaEnded(object sender, RoutedEventArgs args)
+       private void onMediaEnded(object sender, RoutedEventArgs args)
        {
-           //mediaEnded = true;
-           // Reset();
+           mBackground.Pause();
+           mBackground.Position = new TimeSpan(0, 0, 1);
+
+           mBackground.Play();
        }
 
 
@@ -312,6 +304,11 @@ namespace PhotoPaint
         {
             // If our movie is currently playing, stop it.
            // StopMovie();
+        }
+
+        private void mBackground_MediaEnded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
    
