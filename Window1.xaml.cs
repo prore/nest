@@ -17,6 +17,10 @@ using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 using System.Linq;
 
+using System.Collections;
+
+using System.Windows.Media.Animation;
+
 namespace PhotoPaint
 {
     /// <summary>
@@ -53,6 +57,9 @@ namespace PhotoPaint
         /// </summary>
         private static SolidColorBrush buttonHighlightBrush = new SolidColorBrush (Color.FromArgb(0xCC, 0x99, 0x99, 0x99));
         private static SolidColorBrush buttonBackgroundBrush = new SolidColorBrush (Color.FromArgb(0xCC, 0xCC, 0xCC, 0xCC));
+
+        private List<ScatterViewItem> allItems = new List<ScatterViewItem>();
+        
 
          #region Initalization
 
@@ -150,17 +157,43 @@ namespace PhotoPaint
 
         private void CreateTextItem(string text)
         {
-            Label textItem = new Label();
+            ScatterViewItem textItem = new ScatterViewItem();
             // Set the content of the label.
+            text = AddLineBreaks(text);
+            //text = text.Replace("]", Environment.NewLine);
             textItem.Content = text;
             //TODO: max größe
-            textItem.Height = 100;
-            textItem.Width = 200;
-            textItem.MinWidth = 50;
-            textItem.MaxWidth = 250;
+            textItem.Height = 80;
+            textItem.Width = 427 / 2.5;
+            textItem.MinWidth = 427 / 2.5;
+            textItem.MaxWidth = 427 / 2.5;
+            textItem.FontSize = 14;
+            textItem.Padding = new Thickness(8);
+            
             // Add the label to the ScatterView control.
             // It is automatically wrapped in a ScatterViewItem control.
+            allItems.Add(textItem);
             MainScatterView.Items.Add(textItem);
+
+        }
+
+        private string AddLineBreaks(string text)
+        {
+            string textToReturn = "";
+            string[] words = text.Split(' ');
+            int lineLength = 0;
+            for (int i = 0; i < words.Length; i++)
+            {
+
+                if (words[i].Length + lineLength > 22)
+                {
+                    textToReturn += Environment.NewLine;
+                    lineLength = 0;
+                }
+                textToReturn += words[i] + " ";
+                lineLength += words[i].Length + 1;
+            }
+            return textToReturn;
         }
 
         private void LoadAllTextFrom(string textDirectoryPath)
@@ -197,17 +230,17 @@ namespace PhotoPaint
 
             ScatterViewItem photoPad = new ScatterViewItem();
             //photoPad.Name="a";
-            photoPad.Height = 320/2;
-            photoPad.Width=427/2;
-            photoPad.MinWidth=296/2;
-            photoPad.MaxWidth=300;
+            photoPad.Height = 320/2.5;
+            photoPad.Width=427/2.5;
+            photoPad.MinWidth = photoPad.Width;
+            photoPad.MaxWidth = photoPad.Width;
 
 
             Image img1 = new Image();
             img1.Source = new BitmapImage(new Uri(path));
             
             photoPad.Content = img1;
-
+            allItems.Add(photoPad);
             MainScatterView.Items.Add(photoPad);
             
         }
@@ -231,7 +264,24 @@ namespace PhotoPaint
         }
 
         #endregion Initalization
-        
+
+        private void MoveItem(ScatterViewItem item)
+        {
+
+            Storyboard stb = new Storyboard();
+            PointAnimation moveCenter = new PointAnimation();
+            Point endPoint = new Point(1024 / 2, 768 / 2);
+            moveCenter.From = item.ActualCenter;
+            moveCenter.To = endPoint;
+            moveCenter.Duration = new Duration(TimeSpan.FromSeconds(10.0));
+            moveCenter.FillBehavior = FillBehavior.Stop;
+            stb.Children.Add(moveCenter);
+            Storyboard.SetTarget(moveCenter, item);
+            Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
+            stb.Begin(this);
+        }
+
+
         /// <summary>
         /// Loads an image.
         /// </summary>
@@ -277,6 +327,11 @@ namespace PhotoPaint
         {
             // Enable audio for our movie.
             //Movie.IsMuted = false;
+           
+            foreach (ScatterViewItem item in allItems)
+            {
+                MoveItem(item);
+            }
         }
 
 
