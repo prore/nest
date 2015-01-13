@@ -264,7 +264,6 @@ namespace PhotoPaint
 
         private void MoveItem(ScatterViewItem item)
         {
-
             Storyboard stb = new Storyboard();
             PointAnimation moveCenter = new PointAnimation();
             Point endPoint = new Point(1024 / 2, 768 / 2);
@@ -292,6 +291,14 @@ namespace PhotoPaint
             return image;
         }
 
+        private void onDebugButtonClick(Object sender,
+    RoutedEventArgs e)
+        {
+            foreach (ScatterViewItem item in allItems)
+            {
+                MoveItem(item);
+            }
+        }
 
         /// <summary>
         /// Adds handlers for window availability events.
@@ -302,6 +309,7 @@ namespace PhotoPaint
             ApplicationServices.WindowInteractive += OnWindowInteractive;
             ApplicationServices.WindowNoninteractive += OnWindowNoninteractive;
             ApplicationServices.WindowUnavailable += OnWindowUnavailable;
+
         }
 
         /// <summary>
@@ -373,5 +381,6 @@ namespace PhotoPaint
 
         }
     }
+
    
 }

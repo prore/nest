@@ -9,6 +9,7 @@
 
     <!-- Window Content -->
     <Grid>
+        <Button Name="debug" Click="onDebugButtonClick"></Button>
         <MediaElement Name="mBackground" MediaEnded="onMediaEnded"/>
         
         <s:ScatterView Name="MainScatterView" Margin="-21,44,21,-44" >
