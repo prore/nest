@@ -86,6 +86,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Article.cs" />
+    <Compile Include="ArticleList.cs" />
+    <Compile Include="Control.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PlayerList.cs" />
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
       <SubType>Code</SubType>

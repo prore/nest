@@ -45,8 +45,8 @@ namespace PhotoPaint
         /// Duration of playback loop (in seconds) when no video is present.
         /// </summary>
         private const int duration = 12;
-        private MediaElement video;
-        public event RoutedEventHandler mMediaEnded;
+        //private MediaElement video;
+        //public event RoutedEventHandler mMediaEnded;
 
         /// <summary>
         /// Key used to track strokes in a touch device's user data.
@@ -59,7 +59,9 @@ namespace PhotoPaint
         private static SolidColorBrush buttonHighlightBrush = new SolidColorBrush (Color.FromArgb(0xCC, 0x99, 0x99, 0x99));
         private static SolidColorBrush buttonBackgroundBrush = new SolidColorBrush (Color.FromArgb(0xCC, 0xCC, 0xCC, 0xCC));
 
-        private List<ScatterViewItem> allItems = new List<ScatterViewItem>();
+
+        private ArticleList allArticles = new ArticleList();
+        private PlayerList players = new PlayerList(4);
         
 
          #region Initalization
@@ -95,6 +97,8 @@ namespace PhotoPaint
         /// <summary>
         /// Update the size of photo
         /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPrimarySurfaceDeviceChanged(object sender, DeviceChangedEventArgs e)
         {
             //UpdatePhotoSize();
@@ -108,160 +112,101 @@ namespace PhotoPaint
         {
             base.OnInitialized(e);
 
+            Control.Instance.window1 = this;
+            Control.Instance.mainScatterView = MainScatterView;
+
             // Load images and video from the public folders.
             // These are default OS folders that will always be in these locations
             // unless the user has deliberately moved them.
             string publicFoldersPath = Environment.GetEnvironmentVariable("public");
 
             string path = publicFoldersPath + @"\Pictures\Sample Pictures";
-            LoadAllImgFrom(path);
-            LoadAllTextFrom(path);
-
+            LoadFilesFrom(path);
            
             string targetVideoPath = publicFoldersPath + @"\Videos\Sample Videos";
             
-          //      video = new MediaElement();
-                mBackground.BeginInit();
-                mBackground.LoadedBehavior = mBackground.UnloadedBehavior = MediaState.Manual;
-             //   mBackground.MediaEnded += mMediaEnded; 
-                mBackground.Source = new Uri(targetVideoPath + @"\video.mp4");
+            //video = new MediaElement();
+            mBackground.BeginInit();
+            mBackground.LoadedBehavior = mBackground.UnloadedBehavior = MediaState.Manual;
+            //mBackground.MediaEnded += mMediaEnded; 
+            mBackground.Source = new Uri(targetVideoPath + @"\video.mp4");
 
-                mBackground.EndInit();
-                mBackground.Position = TimeSpan.Zero;
-                mBackground.Play();
+            mBackground.EndInit();
+            mBackground.Position = TimeSpan.Zero;
+            mBackground.Play();
                 
-            
-                VideoDrawing vd = new VideoDrawing();
-                VisualBrush vb = new VisualBrush();
+            VideoDrawing vd = new VideoDrawing();
+            VisualBrush vb = new VisualBrush();
                 
-
-                vb.Visual = mBackground;
-                vb.Stretch = Stretch.Fill;
-                vb.TileMode = TileMode.None;
+            vb.Visual = mBackground;
+            vb.Stretch = Stretch.Fill;
+            vb.TileMode = TileMode.None;
                 
-                mWindow.Background = vb;
-          //      MainScatterView.Items.Add(video);
+            mWindow.Background = vb;
+            //MainScatterView.Items.Add(video);
 
-         //   }
+            //}
 
-         //   Movie.Play();  
+            //Movie.Play();  
+
+            AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnKeyDownHandler); // catch keyboard events
+
+            allArticles.animateAll(); // start moving
 
         }
 
-
-
-        private void CreateTextItem(string text)
+        /// <summary>
+        /// reacting to keyboard events
+        /// <summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        // TODO: expand for service tasks (resetting, style switching)
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-            ScatterViewItem textItem = new ScatterViewItem();
-            // Set the content of the label.
-            text = AddLineBreaks(text);
-            //text = text.Replace("]", Environment.NewLine);
-            textItem.Content = text;
-            //TODO: max größe
-            textItem.Height = 80;
-            textItem.Width = 427 / 2.5;
-            textItem.MinWidth = 427 / 2.5;
-            textItem.MaxWidth = 427 / 2.5;
-            textItem.FontSize = 14;
-            textItem.Padding = new Thickness(8);
-            
-            // Add the label to the ScatterView control.
-            // It is automatically wrapped in a ScatterViewItem control.
-            allItems.Add(textItem);
-            MainScatterView.Items.Add(textItem);
-
-        }
-
-        private string AddLineBreaks(string text)
-        {
-            string textToReturn = "";
-            string[] words = text.Split(' ');
-            int lineLength = 0;
-            for (int i = 0; i < words.Length; i++)
+            if (e.Key == Key.Return)
             {
-
-                if (words[i].Length + lineLength > 22)
-                {
-                    textToReturn += Environment.NewLine;
-                    lineLength = 0;
-                }
-                textToReturn += words[i] + " ";
-                lineLength += words[i].Length + 1;
+                MessageBox.Show("Tastatureingabe erkannt");
             }
-            return textToReturn;
-        }
-
-        private void LoadAllTextFrom(string textDirectoryPath)
-        {
-            string path = textDirectoryPath + @"\TextFile.txt";
-            string line; 
- 
-            if (File.Exists(path))
+            else if (e.Key == Key.A)
             {
-                StreamReader file = null;
-                try
-                {
-                    file = new StreamReader(path, System.Text.Encoding.UTF8);
-                   
-                    while ((line = file.ReadLine()) != null)
-                    {
-                        CreateTextItem(line);
-                    }
-                }
-                catch (Exception e)
-                {
-                    CreateTextItem("The file could not be read:" + (e.Message));
-                }
-                finally
-                {
-                    if (file != null)
-                        file.Close();
-                }
-            } 
-        }
-      
-        private void LoadImg(string path)
-        {
-
-            ScatterViewItem photoPad = new ScatterViewItem();
-            //photoPad.Name="a";
-            photoPad.Height = 320/2.5;
-            photoPad.Width=427/2.5;
-            photoPad.MinWidth = photoPad.Width;
-            photoPad.MaxWidth = photoPad.Width;
-
-
-            Image img1 = new Image();
-            img1.Source = new BitmapImage(new Uri(path));
-            
-            photoPad.Content = img1;
-
-            allItems.Add(photoPad);
-
-            MainScatterView.Items.Add(photoPad);
-            
+                // start animations
+                allArticles.animateAll();
+            }
+            else if (e.Key == Key.S)
+            {
+                // stop animations
+                allArticles.stopAll();
+            }
         }
 
-        private void LoadAllImgFrom(string imgDirectoryPath)
+        /// <summary>
+        /// Load all images and headline texts from a given directory
+        /// </summary>
+        /// <param name="directoryPath">Path of the directory in which the files are</param>
+        private void LoadFilesFrom(string directoryPath)
         {
-            if (Directory.Exists(imgDirectoryPath))
+            if (Directory.Exists(directoryPath))
             {
                 var filteredFiles = Directory
-                .GetFiles(imgDirectoryPath, "*.*")
+                .GetFiles(directoryPath, "*.*")
                 .Where(file => file.ToLower().EndsWith("png") || file.ToLower().EndsWith("jpg"))
                 .ToList();
 
-                string[] files = Directory.GetFiles(imgDirectoryPath,  "*.jpg");
+                string[] files = Directory.GetFiles(directoryPath, "*.jpg");
 
-                for (int i = 0; i < filteredFiles.Count; i++) 
+                for (int i = 0; i < filteredFiles.Count; i++)
                 {
-                    LoadImg(filteredFiles[i]);
+                    allArticles.articles.Add(new Article(filteredFiles[i]));
                 }
             }
         }
 
         #endregion Initalization
 
+        /// <summary>
+        /// Automatically move an article piece
+        /// </summary>
+        /// <param name="item">The piece to move</param>
         private void MoveItem(ScatterViewItem item)
         {
             Storyboard stb = new Storyboard();
@@ -272,47 +217,9 @@ namespace PhotoPaint
             moveCenter.Duration = new Duration(TimeSpan.FromSeconds(10.0));
             moveCenter.FillBehavior = FillBehavior.Stop;
             stb.Children.Add(moveCenter);
-            
             Storyboard.SetTarget(moveCenter, item);
             Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
-           
-            stb.Completed += addNewEndPoint;
-     //       moveCenter.RemoveRequested += addNewEndPoint;
-     //       moveCenter.Completed += addNewEndPoint;
-
             stb.Begin(this);
-           
-
-        }
-
-        private void addNewEndPoint(object sender, EventArgs e)
-        {
-            Debug.Print("bla");
-            // TODO: add a new endpoint here
-        }
-
-
-
-        /// <summary>
-        /// Loads an image.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private static Image LoadImageFromPath(string path)
-        {
-            ImageSourceConverter converter = new ImageSourceConverter();
-            Image image = new Image();
-            image.Source = (ImageSource)converter.ConvertFromString(path);
-            return image;
-        }
-
-        private void onDebugButtonClick(Object sender,
-    RoutedEventArgs e)
-        {
-            foreach (ScatterViewItem item in allItems)
-            {
-                MoveItem(item);
-            }
         }
 
         /// <summary>
@@ -324,7 +231,6 @@ namespace PhotoPaint
             ApplicationServices.WindowInteractive += OnWindowInteractive;
             ApplicationServices.WindowNoninteractive += OnWindowNoninteractive;
             ApplicationServices.WindowUnavailable += OnWindowUnavailable;
-
         }
 
         /// <summary>
@@ -348,10 +254,10 @@ namespace PhotoPaint
             // Enable audio for our movie.
             //Movie.IsMuted = false;
            
-            foreach (ScatterViewItem item in allItems)
-            {
-                MoveItem(item);
-            }
+            //foreach (ScatterViewItem item in allItems)
+            //{
+            //    MoveItem(item);
+            //}
         }
 
 
@@ -391,11 +297,15 @@ namespace PhotoPaint
            // StopMovie();
         }
 
+        /// <summary>
+        /// (no info)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mBackground_MediaEnded(object sender, RoutedEventArgs e)
         {
 
         }
     }
-
    
 }

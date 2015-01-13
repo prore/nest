@@ -70,9 +70,15 @@ namespace PhotoPaint
 
             Control.Instance.mainScatterView.Items.Add(imageItem);
 
+            // event handlers for taking up a piece
             imageItem.TouchDown += new EventHandler<TouchEventArgs>(onTouch);
             imageItem.MouseDown += new MouseButtonEventHandler(onClick);
             imageItem.MouseEnter += new MouseEventHandler(onEnter);
+
+            // event handlers for releasing a piece
+            imageItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
+            imageItem.MouseUp += new MouseButtonEventHandler(onClickUp);
+            imageItem.MouseLeave += new MouseEventHandler(onLeave);
 
         }
 
@@ -132,6 +138,11 @@ namespace PhotoPaint
             textItem.MouseDown += new MouseButtonEventHandler(onClick);
             textItem.MouseEnter += new MouseEventHandler(onEnter);
 
+            // event handlers for releasing a piece
+            textItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
+            textItem.MouseUp += new MouseButtonEventHandler(onClickUp);
+            textItem.MouseLeave += new MouseEventHandler(onLeave);
+
         }
 
         /// <summary>
@@ -162,7 +173,7 @@ namespace PhotoPaint
         /// </summary>
         public void onTouch(object sender, TouchEventArgs e)
         {
-            stopItem((ScatterViewItem)sender);
+            onSelect((ScatterViewItem)sender);
         }
 
         /// <summary>
@@ -170,7 +181,7 @@ namespace PhotoPaint
         /// </summary>
         public void onClick(object sender, MouseButtonEventArgs e)
         {
-            stopItem((ScatterViewItem)sender);
+            onSelect((ScatterViewItem)sender);
         }
 
         /// <summary>
@@ -179,7 +190,48 @@ namespace PhotoPaint
         /// </summary>
         public void onEnter(object sender, MouseEventArgs e)
         {
-            stopItem((ScatterViewItem) sender);
+            onSelect((ScatterViewItem)sender);
+        }
+
+        /// <summary>
+        /// React to a releasing event (touch)
+        /// </summary>
+        public void onTouchLeave(object sender, TouchEventArgs e)
+        {
+            onRelease((ScatterViewItem)sender);
+        }
+
+        /// <summary>
+        /// React to a releasing event (click) (doesn't work)
+        /// </summary>
+        public void onClickUp(object sender, MouseButtonEventArgs e)
+        {
+            onRelease((ScatterViewItem)sender);
+        }
+
+        /// <summary>
+        /// React to a mouse leaving event, 
+        /// just a substitute for non-working onClickUp-Event to test at home
+        /// </summary>
+        public void onLeave(object sender, MouseEventArgs e)
+        {
+            onRelease((ScatterViewItem)sender);
+        }
+
+        /// <summary>
+        /// Selecting a piece
+        /// </summary>
+        public void onSelect(ScatterViewItem sender)
+        {
+            stopItem(sender);
+        }
+
+        /// <summary>
+        /// Releasing a piece
+        /// </summary>
+        public void onRelease(ScatterViewItem sender)
+        {
+            moveItem(sender);
         }
 
         /// <summary>
@@ -191,7 +243,14 @@ namespace PhotoPaint
             Storyboard stb = new Storyboard();
             PointAnimation moveCenter = new PointAnimation();
             Point endPoint = new Point(1024 / 2, 768 / 2);
-            moveCenter.From = new Point(1920/2, 1080/2); //moveCenter.From = item.ActualCenter;
+            if (item.ActualCenter.X > -1)
+            {
+                moveCenter.From = item.ActualCenter;
+            }
+            else
+            {
+                moveCenter.From = new Point(1920 / 2, 1080 / 2);
+            }
             moveCenter.To = endPoint;
             moveCenter.Duration = new Duration(TimeSpan.FromSeconds(10.0));
             moveCenter.FillBehavior = FillBehavior.Stop;

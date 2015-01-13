@@ -60,3 +60,16 @@ E:\Users\MT\workspace\surface\nest\obj\Debug\Window1.baml
 E:\Users\MT\workspace\surface\nest\obj\Debug\PhotoPaint.g.resources
 E:\Users\MT\workspace\surface\nest\obj\Debug\PhotoPaint.Properties.Resources.resources
 E:\Users\MT\workspace\surface\nest\obj\Debug\PhotoPaint.csproj.GenerateResource.Cache
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\obj\Debug\PhotoPaint.exe
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\obj\Debug\PhotoPaint.pdb
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\obj\Debug\PhotoPaint.csprojResolveAssemblyReference.cache
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\obj\Debug\Window1.baml
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\obj\Debug\Window1.g.cs
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\obj\Debug\App.g.cs
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\obj\Debug\PhotoPaint_Content.g.cs
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\obj\Debug\PhotoPaint_MarkupCompile.cache
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\obj\Debug\PhotoPaint.g.resources
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\bin\Debug\InstalledAppInfo\AppIcon.png
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\bin\Debug\Resources\ColorWheel.png
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\bin\Debug\PhotoPaint.exe
+R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\bin\Debug\PhotoPaint.pdb
