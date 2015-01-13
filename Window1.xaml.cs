@@ -40,7 +40,9 @@ namespace PhotoPaint
         /// Maps the new stroke (copy) being constructed during playback to the original stroke.
         /// </summary>
         private readonly Dictionary<Stroke, Stroke> newStrokes = new Dictionary<Stroke, Stroke>();
-            
+
+        private Storyboard stb;
+
         /// <summary>
         /// Duration of playback loop (in seconds) when no video is present.
         /// </summary>
@@ -264,7 +266,7 @@ namespace PhotoPaint
 
         private void MoveItem(ScatterViewItem item)
         {
-            Storyboard stb = new Storyboard();
+            stb = new Storyboard();
             PointAnimation moveCenter = new PointAnimation();
             Point endPoint = new Point(1024 / 2, 768 / 2);
             moveCenter.From = item.ActualCenter;
@@ -288,7 +290,22 @@ namespace PhotoPaint
         private void addNewEndPoint(object sender, EventArgs e)
         {
             Debug.Print("bla");
+            Random rnd = new Random();
             // TODO: add a new endpoint here
+            PointAnimation moveCenter = new PointAnimation();
+            Point endPoint = new Point(rnd.Next(1, 1000), rnd.Next(1, 500));
+    //        moveCenter.From = item.ActualCenter;
+            moveCenter.To = endPoint;
+            moveCenter.Duration = new Duration(TimeSpan.FromSeconds(10.0));
+            moveCenter.FillBehavior = FillBehavior.Stop;
+            stb.Children.Add(moveCenter);
+
+           // Storyboard.SetTarget(moveCenter, item);
+            Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
+
+            stb.Completed += addNewEndPoint;
+
+
         }
 
 
