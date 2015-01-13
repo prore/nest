@@ -272,10 +272,25 @@ namespace PhotoPaint
             moveCenter.Duration = new Duration(TimeSpan.FromSeconds(10.0));
             moveCenter.FillBehavior = FillBehavior.Stop;
             stb.Children.Add(moveCenter);
+            
             Storyboard.SetTarget(moveCenter, item);
             Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
+           
+            stb.Completed += addNewEndPoint;
+     //       moveCenter.RemoveRequested += addNewEndPoint;
+     //       moveCenter.Completed += addNewEndPoint;
+
             stb.Begin(this);
+           
+
         }
+
+        private void addNewEndPoint(object sender, EventArgs e)
+        {
+            Debug.Print("bla");
+            // TODO: add a new endpoint here
+        }
+
 
 
         /// <summary>
