@@ -20,7 +20,7 @@ namespace PhotoPaint
 
         private String path;
         public int playerNumber;
-        private int x, y, y2, y3, orientation;
+        private int posX, imageX, textX, y, orientation;
 
         //public Player player; //owner of this island
 
@@ -50,20 +50,20 @@ namespace PhotoPaint
         }
         private void setPosValues()
         {
-            x = 960;
+            y = 540;
             if (playerNumber == 1)
             {
-                orientation = 0;
-                y = 100;
-                y2 = 55;
-                y3 = 170; 
+                orientation = 90;
+                posX = 145;
+                imageX = posX-50;
+                textX = posX+70; 
             }
             else if (playerNumber == 2)
             {
-                orientation = 180;
-                y = 980;
-                y2 = 1025;
-                y3 = 910;
+                orientation = 90;
+                posX = 1815;
+                imageX = posX+50;
+                textX = posX-70;
             }
 
         }
@@ -73,11 +73,12 @@ namespace PhotoPaint
             island.Width = 300;
             island.MinWidth = island.Width;
             island.MaxWidth = island.Width;
-            island.Center = new System.Windows.Point(x, y);
+            island.Center = new System.Windows.Point(posX, y);
             island.CanMove = false;
             island.CanRotate = false;
             island.CanScale = false;
             island.IsEnabled = false;
+            island.Orientation = orientation;
 
 
             Image img1 = new Image();
@@ -95,7 +96,8 @@ namespace PhotoPaint
             imageSlot.CanRotate = false;
             imageSlot.CanScale = false;
             imageSlot.IsEnabled = false;
-            imageSlot.Center = new System.Windows.Point(x, y2);
+            imageSlot.Center = new System.Windows.Point(imageX, y);
+            imageSlot.Orientation = orientation;
 
             textSlot.Width = 427 / 2.5;
             textSlot.Height = 80;
@@ -103,7 +105,8 @@ namespace PhotoPaint
             textSlot.CanRotate = false;
             textSlot.CanScale = false;
             textSlot.IsEnabled = false;
-            textSlot.Center = new System.Windows.Point(x, y3);
+            textSlot.Center = new System.Windows.Point(textX, y);
+            textSlot.Orientation = orientation;
        }
 
     }
