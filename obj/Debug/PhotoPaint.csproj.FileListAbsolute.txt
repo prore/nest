@@ -73,3 +73,16 @@ R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientie
 R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\bin\Debug\Resources\ColorWheel.png
 R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\bin\Debug\PhotoPaint.exe
 R:\dokumente\bildung\tu_wien\medieninformatik_msc\lva\semester_3\projektorientierte_recherche_und_designgenerierende_methoden_2\projekt\repository\nest\bin\Debug\PhotoPaint.pdb
+C:\Users\daniela\Uni\nest\obj\Debug\PhotoPaint.exe
+C:\Users\daniela\Uni\nest\obj\Debug\PhotoPaint.pdb
+C:\Users\daniela\Uni\nest\bin\Debug\InstalledAppInfo\AppIcon.png
+C:\Users\daniela\Uni\nest\bin\Debug\Resources\ColorWheel.png
+C:\Users\daniela\Uni\nest\bin\Debug\PhotoPaint.exe
+C:\Users\daniela\Uni\nest\bin\Debug\PhotoPaint.pdb
+C:\Users\daniela\Uni\nest\obj\Debug\PhotoPaint.csprojResolveAssemblyReference.cache
+C:\Users\daniela\Uni\nest\obj\Debug\Window1.baml
+C:\Users\daniela\Uni\nest\obj\Debug\Window1.g.cs
+C:\Users\daniela\Uni\nest\obj\Debug\App.g.cs
+C:\Users\daniela\Uni\nest\obj\Debug\PhotoPaint_Content.g.cs
+C:\Users\daniela\Uni\nest\obj\Debug\PhotoPaint_MarkupCompile.cache
+C:\Users\daniela\Uni\nest\obj\Debug\PhotoPaint.g.resources

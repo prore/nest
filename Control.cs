@@ -22,6 +22,9 @@ namespace PhotoPaint
         public int player1points;
         public int player2points;
 
+        public Island island1;
+        public Island island2;
+
         /// <summary>
         /// constructor
         /// </summary>

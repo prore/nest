@@ -122,6 +122,8 @@ namespace PhotoPaint
 
             string path = publicFoldersPath + @"\Pictures\Sample Pictures";
             LoadFilesFrom(path);
+
+            Island i1 = new Island(publicFoldersPath + @"\Pictures\island1.png");
            
             string targetVideoPath = publicFoldersPath + @"\Videos\Sample Videos";
             
