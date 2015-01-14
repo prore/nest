@@ -41,7 +41,6 @@ C:\Users\media2\prore\nest\obj\Debug\Window1.g.cs
 C:\Users\media2\prore\nest\obj\Debug\App.g.cs
 C:\Users\media2\prore\nest\obj\Debug\PhotoPaint_Content.g.cs
 C:\Users\media2\prore\nest\obj\Debug\PhotoPaint_MarkupCompile.cache
-C:\Users\media2\prore\nest\obj\Debug\PhotoPaint_MarkupCompile.lref
 C:\Users\media2\prore\nest\obj\Debug\Window1.baml
 C:\Users\media2\prore\nest\obj\Debug\PhotoPaint.g.resources
 E:\Users\MT\workspace\surface\nest\obj\Debug\PhotoPaint.exe

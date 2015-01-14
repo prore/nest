@@ -40,7 +40,7 @@ namespace PhotoPaint
             island.Width = 300;
             island.MinWidth = island.Width;
             island.MaxWidth = island.Width;
-            island.Center = new System.Windows.Point(1110, 100);
+            island.Center = new System.Windows.Point(960, 100);
             island.CanMove = false;
             island.CanRotate = false;
             island.CanScale = false;
@@ -65,7 +65,7 @@ namespace PhotoPaint
             imageSlot.CanRotate = false;
             imageSlot.CanScale = false;
             imageSlot.IsEnabled = false;
-            imageSlot.Center = new System.Windows.Point(1110, 55);
+            imageSlot.Center = new System.Windows.Point(960, 55);
 
             textSlot.Width = 427 / 2.5;
             textSlot.Height = 80;
@@ -73,7 +73,7 @@ namespace PhotoPaint
             textSlot.CanRotate = false;
             textSlot.CanScale = false;
             textSlot.IsEnabled = false;
-            textSlot.Center = new System.Windows.Point(1110, 170);
+            textSlot.Center = new System.Windows.Point(960, 170);
         }
 
     }
