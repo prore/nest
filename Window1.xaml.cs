@@ -129,13 +129,9 @@ namespace PhotoPaint
 
            
             string targetVideoPath = publicFoldersPath + @"\Videos\Sample Videos";
-            
-            //video = new MediaElement();
+
             mBackground.BeginInit();
             mBackground.LoadedBehavior = mBackground.UnloadedBehavior = MediaState.Manual;
-            //mBackground.MediaEnded += mMediaEnded; 
-        //    mBackground.Source = new Uri(@"pack://PhotoPaint:,,,/Resources/movie.mp4");
-            
             mBackground.EndInit();
             mBackground.Position = TimeSpan.Zero;
             mBackground.Play();
@@ -148,11 +144,6 @@ namespace PhotoPaint
             vb.TileMode = TileMode.None;
                 
             mWindow.Background = vb;
-            //MainScatterView.Items.Add(video);
-
-            //}
-
-            //Movie.Play();  
 
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnKeyDownHandler); // catch keyboard events
 
