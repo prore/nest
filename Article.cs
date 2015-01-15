@@ -148,14 +148,15 @@ namespace PhotoPaint
             Control.Instance.mainScatterView.Items.Add(textItem);
 
       //      textItem.TouchDown += new EventHandler<TouchEventArgs>(onTouch);
-            textItem.MouseDown += new MouseButtonEventHandler(onClick);
+      //      textItem.MouseDown += new MouseButtonEventHandler(onClick);
       //      textItem.MouseEnter += new MouseEventHandler(onEnter);
 
             // event handlers for releasing a piece
      //       textItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
-            textItem.MouseUp += new MouseButtonEventHandler(onClickUp);
+    //        textItem.MouseUp += new MouseButtonEventHandler(onClickUp);
         //    textItem.MouseLeave += new MouseEventHandler(onLeave);
-
+            textItem.ContainerActivated += onStartInteraction;
+            textItem.ContainerDeactivated += onStopInteraction;
         }
 
         /// <summary>
