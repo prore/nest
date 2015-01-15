@@ -25,6 +25,8 @@ namespace PhotoPaint
         public Island island1;
         public Island island2;
 
+        public Random rnd; // seed for random numbers
+
         /// <summary>
         /// constructor
         /// </summary>
@@ -32,6 +34,7 @@ namespace PhotoPaint
         {
             player1points = 0;
             player2points = 0;
+            rnd = new Random();
         }
 
         /// <summary>

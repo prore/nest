@@ -9,6 +9,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Input;
+using System.Windows.Media;
 
 /*
  * represents an article with image and headline
@@ -130,6 +131,7 @@ namespace PhotoPaint
             textItem.MinWidth = 427 / 2.5;
             textItem.MaxWidth = 427 / 2.5;
             textItem.FontSize = 14;
+            textItem.Background = Brushes.White;
             textItem.Padding = new Thickness(8);
 
             Control.Instance.mainScatterView.Items.Add(textItem);
@@ -240,9 +242,11 @@ namespace PhotoPaint
         /// <param name="item">The piece to move</param>
         public void moveItem(ScatterViewItem item)
         {
+
             Storyboard stb = new Storyboard();
             PointAnimation moveCenter = new PointAnimation();
-            Point endPoint = new Point(1024 / 2, 768 / 2);
+            Point endPoint = new Point(Control.Instance.rnd.Next(1920), Control.Instance.rnd.Next(1080));
+            //Point endPoint = new Point(1024 / 2, 768 / 2);
             if (item.ActualCenter.X > -1)
             {
                 moveCenter.From = item.ActualCenter;
@@ -268,8 +272,17 @@ namespace PhotoPaint
             {
                 textStoryboard = stb;
             }
+            //stb.
+            //stb.RepeatBehavior = RepeatBehavior.Forever;
+            //stb.Completed += new EventHandler(test);
 
         }
+
+        //private void test(object sender, EventArgs e)
+        //{
+        //    MessageBox.Show("Ende");
+        //    textItem.Center = new Point(20, 20);
+        //}
 
         /// <summary>
         /// Stop movement of an article piece

@@ -17,8 +17,8 @@ namespace PhotoPaint
 
         public int orientation; // specifies orientation of elements in degrees to show something to this user
 
-        public ScatterViewItem currentImage; // image currently in the image slot
-        public ScatterViewItem currentText; // text currently in the text slot
+        //public ScatterViewItem currentImage; // image currently in the image slot
+        //public ScatterViewItem currentText; // text currently in the text slot
 
         public List<Article> finishedArticles; // articles to show in the list of finished articles
 
