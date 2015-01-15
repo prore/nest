@@ -134,8 +134,8 @@ namespace PhotoPaint
             mBackground.BeginInit();
             mBackground.LoadedBehavior = mBackground.UnloadedBehavior = MediaState.Manual;
             //mBackground.MediaEnded += mMediaEnded; 
-            mBackground.Source = new Uri(targetVideoPath + @"\video.mp4");
-
+        //    mBackground.Source = new Uri(@"pack://PhotoPaint:,,,/Resources/movie.mp4");
+            
             mBackground.EndInit();
             mBackground.Position = TimeSpan.Zero;
             mBackground.Play();
