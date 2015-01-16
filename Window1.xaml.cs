@@ -79,7 +79,7 @@ namespace PhotoPaint
             // listen for changes to the primary InteractiveSurfaceDevice.
             InteractiveSurface.PrimarySurfaceDevice.Changed += OnPrimarySurfaceDeviceChanged;
 
-            players = new PlayerList(2);
+            players = new PlayerList(4);
             Control.Instance.playerList = players;
         }
 

@@ -17,7 +17,7 @@ namespace PhotoPaint
 
         private int points;
 
-        public int orientation; // specifies orientation of elements in degrees to show something to this user
+        //public int orientation; // specifies orientation of elements in degrees to show something to this user
         public Island island;
 
         //public ScatterViewItem currentImage; // image currently in the image slot
@@ -30,7 +30,7 @@ namespace PhotoPaint
         /// </summary>
         public Player(int orientation)
         {
-            this.orientation = orientation;
+            //this.orientation = orientation;
             points = 0;
             finishedArticles = new List<Article>();
         }
