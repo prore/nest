@@ -288,6 +288,7 @@ namespace PhotoPaint
             stb.Children.Add(moveCenter);
             Storyboard.SetTarget(moveCenter, item);
             Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
+            stb.Completed += new EventHandler((sender, e) => onAnimationEnd(sender, e, item));
             stb.Begin(Control.Instance.window1, true);
             //item.Center = endPoint;
 
@@ -299,17 +300,18 @@ namespace PhotoPaint
             {
                 textStoryboard = stb;
             }
-            //stb.
-            //stb.RepeatBehavior = RepeatBehavior.Forever;
-            //stb.Completed += new EventHandler(test);
 
         }
 
-        //private void test(object sender, EventArgs e)
-        //{
-        //    MessageBox.Show("Ende");
-        //    textItem.Center = new Point(20, 20);
-        //}
+        /// <summary>
+        /// reaction at the end of an animation
+        /// </summary>
+        private void onAnimationEnd(object sender, EventArgs e, ScatterViewItem item)
+        {
+            // start new animation
+            moveItem(item);
+
+        }
 
         /// <summary>
         /// Stop movement of an article piece
@@ -317,6 +319,7 @@ namespace PhotoPaint
         /// <param name="item">The piece to stop</param>
         public void stopItem(ScatterViewItem item)
         {
+            item.Center = item.ActualCenter;
             foreach (Timeline t in imageStoryboard.Children.ToArray()) {
                 Debug.WriteLine(t.ToString());
             }
