@@ -19,8 +19,10 @@ namespace PhotoPaint
         public Window1 window1;
         public ScatterView mainScatterView;
 
-        public int player1points;
-        public int player2points;
+        public PlayerList playerList;
+
+        //public int player1points;
+        //public int player2points;
 
         public Island island1;
         public Island island2;
@@ -32,8 +34,8 @@ namespace PhotoPaint
         /// </summary>
         private Control() 
         {
-            player1points = 0;
-            player2points = 0;
+            //player1points = 0;
+            //player2points = 0;
             rnd = new Random();
         }
 

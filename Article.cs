@@ -76,21 +76,10 @@ namespace PhotoPaint
             Debug.WriteLine("adding event handlers");
 
             // event handlers for taking up a piece
-            //  Uncomment if needed...
-        //    imageItem.TouchDown += new EventHandler<TouchEventArgs>(onTouch);
-    //        imageItem.MouseDown += new MouseButtonEventHandler(onClick);
-    //        imageItem.MouseEnter += new MouseEventHandler(onEnter);  
             
             // should abstract both touch and mouse interactions
             imageItem.ContainerActivated += onStartInteraction;
             imageItem.ContainerDeactivated += onStopInteraction;
-
-
-            
-            // event handlers for releasing a piece
-    //        imageItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
-    //        imageItem.MouseUp += new MouseButtonEventHandler(onClickUp);
-    //        imageItem.MouseLeave += new MouseEventHandler(onLeave);
 
         }
 
@@ -147,14 +136,6 @@ namespace PhotoPaint
 
             Control.Instance.mainScatterView.Items.Add(textItem);
 
-      //      textItem.TouchDown += new EventHandler<TouchEventArgs>(onTouch);
-      //      textItem.MouseDown += new MouseButtonEventHandler(onClick);
-      //      textItem.MouseEnter += new MouseEventHandler(onEnter);
-
-            // event handlers for releasing a piece
-     //       textItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
-    //        textItem.MouseUp += new MouseButtonEventHandler(onClickUp);
-        //    textItem.MouseLeave += new MouseEventHandler(onLeave);
             textItem.ContainerActivated += onStartInteraction;
             textItem.ContainerDeactivated += onStopInteraction;
         }
@@ -198,56 +179,6 @@ namespace PhotoPaint
         }
 
         /// <summary>
-        /// React to a touch event
-        /// </summary>
-        public void onTouch(object sender, TouchEventArgs e)
-        {
-            onSelect((ScatterViewItem)sender);
-        }
-
-        /// <summary>
-        /// React to a click event (doesn't work)
-        /// </summary>
-        public void onClick(object sender, MouseButtonEventArgs e)
-        {
-            onSelect((ScatterViewItem)sender);
-        }
-
-        /// <summary>
-        /// React to a mouseenter event, 
-        /// just a substitute for non-working onClick-Event to test at home
-        /// </summary>
-        public void onEnter(object sender, MouseEventArgs e)
-        {
-            onSelect((ScatterViewItem)sender);
-        }
-
-        /// <summary>
-        /// React to a releasing event (touch)
-        /// </summary>
-        public void onTouchLeave(object sender, TouchEventArgs e)
-        {
-            onRelease((ScatterViewItem)sender);
-        }
-
-        /// <summary>
-        /// React to a releasing event (click) (doesn't work)
-        /// </summary>
-        public void onClickUp(object sender, MouseButtonEventArgs e)
-        {
-            onRelease((ScatterViewItem)sender);
-        }
-
-        /// <summary>
-        /// React to a mouse leaving event, 
-        /// just a substitute for non-working onClickUp-Event to test at home
-        /// </summary>
-        public void onLeave(object sender, MouseEventArgs e)
-        {
-            onRelease((ScatterViewItem)sender);
-        }
-
-        /// <summary>
         /// Selecting a piece
         /// </summary>
         public void onSelect(ScatterViewItem sender)
@@ -260,7 +191,50 @@ namespace PhotoPaint
         /// </summary>
         public void onRelease(ScatterViewItem sender)
         {
+            double distance = 100; // distance in px to snap into a grid
+
+            double x1 = sender.Center.X;
+            double y1 = sender.Center.Y;
+            double x2, y2;
+
+            // snap image pieces
+            if (sender.Equals(imageItem))
+            {
+                // test for each island
+                for (int i = 0; i < Control.Instance.playerList.players.Count(); i++)
+                {
+                    x2 = Control.Instance.playerList.players[i].island.imageSlot.Center.X;
+                    y2 = Control.Instance.playerList.players[i].island.imageSlot.Center.Y;
+
+                    if (Math.Pow(Math.Abs(x1 - x2), 2) + Math.Pow(Math.Abs(y1 - y2), 2) < Math.Pow(distance, 2))
+                    {
+                        sender.Center = Control.Instance.playerList.players[i].island.imageSlot.Center;
+                        sender.Orientation = Control.Instance.playerList.players[i].island.orientation;
+                        return;
+                    }
+                }
+            }
+            // snap text pieces
+            else
+            {
+                // test for each island
+                for (int i = 0; i < Control.Instance.playerList.players.Count(); i++)
+                {
+                    x2 = Control.Instance.playerList.players[i].island.textSlot.Center.X;
+                    y2 = Control.Instance.playerList.players[i].island.textSlot.Center.Y;
+
+                    if (Math.Pow(Math.Abs(x1 - x2), 2) + Math.Pow(Math.Abs(y1 - y2), 2) < Math.Pow(distance, 2))
+                    {
+                        sender.Center = Control.Instance.playerList.players[i].island.textSlot.Center;
+                        sender.Orientation = Control.Instance.playerList.players[i].island.orientation;
+                        return;
+                    }
+                }
+            }
+
+            // move item again if it didn't snap
             moveItem(sender);
+
         }
 
         /// <summary>
@@ -310,7 +284,6 @@ namespace PhotoPaint
         {
             // start new animation
             moveItem(item);
-
         }
 
         /// <summary>

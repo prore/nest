@@ -61,7 +61,7 @@ namespace PhotoPaint
 
 
         private ArticleList allArticles = new ArticleList();
-        private PlayerList players = new PlayerList(4);
+        private PlayerList players;
         
 
          #region Initalization
@@ -78,6 +78,9 @@ namespace PhotoPaint
 
             // listen for changes to the primary InteractiveSurfaceDevice.
             InteractiveSurface.PrimarySurfaceDevice.Changed += OnPrimarySurfaceDeviceChanged;
+
+            players = new PlayerList(2);
+            Control.Instance.playerList = players;
         }
 
         /// <summary>
@@ -122,11 +125,6 @@ namespace PhotoPaint
 
             string path = publicFoldersPath + @"\Pictures\Sample Pictures";
             LoadFilesFrom(path);
-
-            Island i1 = new Island(@"pack://application:,,,/Resources/Island1.png", 1);
-            Island i2 = new Island(@"pack://application:,,,/Resources/Island2.png", 2);
-            //Island i2 = new Island(publicFoldersPath + @"\Pictures\island2.png", 2);
-
            
             string targetVideoPath = publicFoldersPath + @"\Videos\Sample Videos";
 

@@ -13,9 +13,12 @@ namespace PhotoPaint
     class Player
     {
 
+        public readonly int playerId;
+
         public int points;
 
         public int orientation; // specifies orientation of elements in degrees to show something to this user
+        public Island island;
 
         //public ScatterViewItem currentImage; // image currently in the image slot
         //public ScatterViewItem currentText; // text currently in the text slot

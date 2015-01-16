@@ -20,6 +20,7 @@ namespace PhotoPaint
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 players.Add(new Player(i * 90));
+                players[i].island = new Island(@"pack://application:,,,/Resources/Island1.png", i + 1);
             }
         }
 

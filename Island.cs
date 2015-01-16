@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows;
+using Microsoft.Surface.Presentation;
 
 /*
  * a players island
@@ -20,10 +22,15 @@ namespace PhotoPaint
 
         private String path;
         public int playerNumber;
-        private int posX, imageX, textX, y, orientation;
+        private int posX, imageX, textX, y;
+
+        public int orientation;
 
         //public Player player; //owner of this island
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public Island(String path, int playerNumber)
         {
             this.path = path;
@@ -41,13 +48,15 @@ namespace PhotoPaint
             createIsland();
             createSlots();
             
-
             Control.Instance.mainScatterView.Items.Add(island);
             Control.Instance.mainScatterView.Items.Add(imageSlot);
             Control.Instance.mainScatterView.Items.Add(textSlot);
-            
 
         }
+
+        /// <summary>
+        /// set position values
+        /// </summary>
         private void setPosValues()
         {
             y = 540;
@@ -60,13 +69,17 @@ namespace PhotoPaint
             }
             else if (playerNumber == 2)
             {
-                orientation = 90;
+                orientation = 270;
                 posX = 1815;
                 imageX = posX+50;
                 textX = posX-70;
             }
 
         }
+
+        /// <summary>
+        /// create island element
+        /// </summary>
         private void createIsland()
         {
             island.Height = 250;
@@ -80,7 +93,6 @@ namespace PhotoPaint
             island.IsEnabled = false;
             island.Orientation = orientation;
 
-
             Image img1 = new Image();
             img1.Source = new BitmapImage(new Uri(path));
 
@@ -88,6 +100,9 @@ namespace PhotoPaint
 
         }
 
+        /// <summary>
+        /// create slot elements for image and headline
+        /// </summary>
         private void createSlots()
         {
             imageSlot.Width = 427 / 2.5;
