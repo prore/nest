@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using Microsoft.Surface.Presentation;
+using System.Windows.Media;
 
 /*
  * a players island
@@ -19,6 +20,7 @@ namespace PhotoPaint
         public ScatterViewItem island; //the island itself (background)
         public ScatterViewItem imageSlot; //slot for an image
         public ScatterViewItem textSlot; // slot for a text item
+        public ScatterViewItem pointDisplay; // element to show current points
 
         private String path;
         public int playerNumber;
@@ -39,6 +41,7 @@ namespace PhotoPaint
             island = new ScatterViewItem();
             imageSlot = new ScatterViewItem();
             textSlot = new ScatterViewItem();
+            pointDisplay = new ScatterViewItem();
 
             island.ZIndex = 0;
             imageSlot.ZIndex = 1;
@@ -47,10 +50,12 @@ namespace PhotoPaint
 
             createIsland();
             createSlots();
+            createPointDisplay();
             
             Control.Instance.mainScatterView.Items.Add(island);
             Control.Instance.mainScatterView.Items.Add(imageSlot);
             Control.Instance.mainScatterView.Items.Add(textSlot);
+            Control.Instance.mainScatterView.Items.Add(pointDisplay);
 
         }
 
@@ -123,6 +128,26 @@ namespace PhotoPaint
             textSlot.Center = new System.Windows.Point(textX, y);
             textSlot.Orientation = orientation;
        }
+
+        /// <summary>
+        /// create element to show current points
+        /// </summary>
+        private void createPointDisplay()
+        {
+            pointDisplay.Width = 427 / 2.5;
+            pointDisplay.Height = 320 / 2.5;
+            pointDisplay.CanMove = false;
+            pointDisplay.CanRotate = false;
+            pointDisplay.CanScale = false;
+            pointDisplay.IsEnabled = false;
+            pointDisplay.Center = new System.Windows.Point(imageX, y);
+            pointDisplay.Orientation = orientation;
+            pointDisplay.Content = 0;
+            pointDisplay.Background = Brushes.Transparent;
+            pointDisplay.FontSize = 30;
+            pointDisplay.HorizontalContentAlignment = HorizontalAlignment.Center;
+            pointDisplay.VerticalContentAlignment = VerticalAlignment.Center;
+        }
 
     }
 }

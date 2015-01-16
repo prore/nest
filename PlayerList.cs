@@ -35,5 +35,20 @@ namespace PhotoPaint
             }
         }
 
+        /// <summary>
+        /// get the player who is the owner of a given island
+        /// </summary>
+        public Player getPlayer(Island island)
+        {
+            foreach (Player player in players)
+            {
+                if (player.island.Equals(island))
+                {
+                    return player;
+                }
+            }
+            return null;
+        }
+
     }
 }

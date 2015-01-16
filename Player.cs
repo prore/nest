@@ -15,7 +15,7 @@ namespace PhotoPaint
 
         //public readonly int playerId;
 
-        public int points;
+        private int points;
 
         public int orientation; // specifies orientation of elements in degrees to show something to this user
         public Island island;
@@ -33,6 +33,23 @@ namespace PhotoPaint
             this.orientation = orientation;
             points = 0;
             finishedArticles = new List<Article>();
+        }
+
+        /// <summary>
+        /// Getter for points
+        /// </summary>
+        public int getPoints()
+        {
+            return points;
+        }
+
+        /// <summary>
+        /// Setter for points
+        /// </summary>
+        public void setPoints(int points)
+        {
+            this.points = points;
+            island.pointDisplay.Content = points;
         }
 
         /// <summary>
