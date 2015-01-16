@@ -20,12 +20,13 @@ namespace PhotoPaint
         public ScatterView mainScatterView;
 
         public PlayerList playerList;
+        //public ArticleList articleList;
 
         //public int player1points;
         //public int player2points;
 
-        public Island island1;
-        public Island island2;
+        //public Island island1;
+        //public Island island2;
 
         public Random rnd; // seed for random numbers
 

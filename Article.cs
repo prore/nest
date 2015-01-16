@@ -29,8 +29,11 @@ namespace PhotoPaint
         public Storyboard imageStoryboard; // current image animation
         public Storyboard textStoryboard; // current text animation
 
-        public int imagePlayer; // which player (1-4) has the image on his island? 0 = none
-        public int textPlayer; // which player (1-4) has the headline on his island? 0 = none
+        public Player imageOwner; // current owner of image piece
+        public Player textOwner; // current owner of text piece
+
+        //public int imagePlayer; // which player (1-4) has the image on his island? 0 = none
+        //public int textPlayer; // which player (1-4) has the headline on his island? 0 = none
 
         /// <summary>
         /// constructor
@@ -43,8 +46,8 @@ namespace PhotoPaint
             nameID = path;
 
             // no one owns the new pieces yet
-            imagePlayer = 0;
-            textPlayer = 0;
+            imageOwner = null;
+            textOwner = null;
 
             // create image and text object
             imageItem = new ScatterViewItem();
@@ -183,6 +186,14 @@ namespace PhotoPaint
         /// </summary>
         public void onSelect(ScatterViewItem sender)
         {
+            if (sender.Equals(imageItem))
+            {
+                imageOwner = null;
+            }
+            else
+            {
+                textOwner = null;
+            }
             stopItem(sender);
         }
 
@@ -191,6 +202,7 @@ namespace PhotoPaint
         /// </summary>
         public void onRelease(ScatterViewItem sender)
         {
+
             double distance = 100; // distance in px to snap into a grid
 
             double x1 = sender.Center.X;
@@ -200,7 +212,7 @@ namespace PhotoPaint
             // snap image pieces
             if (sender.Equals(imageItem))
             {
-                // test for each island
+                // check for each island
                 for (int i = 0; i < Control.Instance.playerList.players.Count(); i++)
                 {
                     x2 = Control.Instance.playerList.players[i].island.imageSlot.Center.X;
@@ -210,6 +222,8 @@ namespace PhotoPaint
                     {
                         sender.Center = Control.Instance.playerList.players[i].island.imageSlot.Center;
                         sender.Orientation = Control.Instance.playerList.players[i].island.orientation;
+                        imageOwner = Control.Instance.playerList.players[i];
+                        checkFitting();
                         return;
                     }
                 }
@@ -217,7 +231,7 @@ namespace PhotoPaint
             // snap text pieces
             else
             {
-                // test for each island
+                // check for each island
                 for (int i = 0; i < Control.Instance.playerList.players.Count(); i++)
                 {
                     x2 = Control.Instance.playerList.players[i].island.textSlot.Center.X;
@@ -227,6 +241,8 @@ namespace PhotoPaint
                     {
                         sender.Center = Control.Instance.playerList.players[i].island.textSlot.Center;
                         sender.Orientation = Control.Instance.playerList.players[i].island.orientation;
+                        textOwner = Control.Instance.playerList.players[i];
+                        checkFitting();
                         return;
                     }
                 }
@@ -303,6 +319,20 @@ namespace PhotoPaint
             else if (item.Equals(textItem))
             {
                 textStoryboard.Stop(Control.Instance.window1);
+            }
+        }
+
+        /// <summary>
+        /// checks if both pieces are currently on the same island and reacts to it
+        /// </summary>
+        private void checkFitting()
+        {
+            if (imageOwner != null && textOwner != null && imageOwner.Equals(textOwner))
+            {
+                imageOwner.points++;
+                imageItem.Center = new Point(-400, -400);
+                textItem.Center = new Point(-400, -400);
+                // TODO add article to list of finished articles
             }
         }
 

@@ -13,7 +13,7 @@ namespace PhotoPaint
     class Player
     {
 
-        public readonly int playerId;
+        //public readonly int playerId;
 
         public int points;
 
