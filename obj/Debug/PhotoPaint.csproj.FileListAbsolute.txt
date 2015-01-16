@@ -85,3 +85,17 @@ C:\Users\daniela\Uni\nest\obj\Debug\App.g.cs
 C:\Users\daniela\Uni\nest\obj\Debug\PhotoPaint_Content.g.cs
 C:\Users\daniela\Uni\nest\obj\Debug\PhotoPaint_MarkupCompile.cache
 C:\Users\daniela\Uni\nest\obj\Debug\PhotoPaint.g.resources
+C:\Users\michael\Documents\workspace\nest\obj\Debug\PhotoPaint.exe
+C:\Users\michael\Documents\workspace\nest\obj\Debug\PhotoPaint.pdb
+C:\Users\michael\Documents\workspace\nest\bin\Debug\InstalledAppInfo\AppIcon.png
+C:\Users\michael\Documents\workspace\nest\bin\Debug\Resources\ColorWheel.png
+C:\Users\michael\Documents\workspace\nest\bin\Debug\PhotoPaint.exe
+C:\Users\michael\Documents\workspace\nest\bin\Debug\PhotoPaint.pdb
+C:\Users\michael\Documents\workspace\nest\obj\Debug\PhotoPaint.csprojResolveAssemblyReference.cache
+C:\Users\michael\Documents\workspace\nest\obj\Debug\Window1.baml
+C:\Users\michael\Documents\workspace\nest\obj\Debug\Window1.g.cs
+C:\Users\michael\Documents\workspace\nest\obj\Debug\App.g.cs
+C:\Users\michael\Documents\workspace\nest\obj\Debug\PhotoPaint_Content.g.cs
+C:\Users\michael\Documents\workspace\nest\obj\Debug\PhotoPaint_MarkupCompile.cache
+C:\Users\michael\Documents\workspace\nest\obj\Debug\PhotoPaint.g.resources
+C:\Users\michael\Documents\workspace\nest\bin\Debug\Resources\video.mp4

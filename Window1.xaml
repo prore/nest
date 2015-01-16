@@ -9,7 +9,7 @@
 
     <!-- Window Content -->
     <Grid>
-        <MediaElement Name="mBackground" MediaEnded="onMediaEnded"/>
+        <MediaElement Name="mBackground" Source="Resources\video.mp4" MediaEnded="onMediaEnded"/>
         
         <s:ScatterView Name="MainScatterView" Margin="-21,44,21,-44">
         

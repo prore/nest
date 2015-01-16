@@ -9,6 +9,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Diagnostics;
 
 /*
  * represents an article with image and headline
@@ -70,15 +72,25 @@ namespace PhotoPaint
 
             Control.Instance.mainScatterView.Items.Add(imageItem);
 
-            // event handlers for taking up a piece
-            imageItem.TouchDown += new EventHandler<TouchEventArgs>(onTouch);
-            imageItem.MouseDown += new MouseButtonEventHandler(onClick);
-            imageItem.MouseEnter += new MouseEventHandler(onEnter);
 
+            Debug.WriteLine("adding event handlers");
+
+            // event handlers for taking up a piece
+            //  Uncomment if needed...
+        //    imageItem.TouchDown += new EventHandler<TouchEventArgs>(onTouch);
+    //        imageItem.MouseDown += new MouseButtonEventHandler(onClick);
+    //        imageItem.MouseEnter += new MouseEventHandler(onEnter);  
+            
+            // should abstract both touch and mouse interactions
+            imageItem.ContainerActivated += onStartInteraction;
+            imageItem.ContainerDeactivated += onStopInteraction;
+
+
+            
             // event handlers for releasing a piece
-            imageItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
-            imageItem.MouseUp += new MouseButtonEventHandler(onClickUp);
-            imageItem.MouseLeave += new MouseEventHandler(onLeave);
+    //        imageItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
+    //        imageItem.MouseUp += new MouseButtonEventHandler(onClickUp);
+    //        imageItem.MouseLeave += new MouseEventHandler(onLeave);
 
         }
 
@@ -130,19 +142,21 @@ namespace PhotoPaint
             textItem.MinWidth = 427 / 2.5;
             textItem.MaxWidth = 427 / 2.5;
             textItem.FontSize = 14;
+            textItem.Background = Brushes.White;
             textItem.Padding = new Thickness(8);
 
             Control.Instance.mainScatterView.Items.Add(textItem);
 
-            textItem.TouchDown += new EventHandler<TouchEventArgs>(onTouch);
-            textItem.MouseDown += new MouseButtonEventHandler(onClick);
-            textItem.MouseEnter += new MouseEventHandler(onEnter);
+      //      textItem.TouchDown += new EventHandler<TouchEventArgs>(onTouch);
+      //      textItem.MouseDown += new MouseButtonEventHandler(onClick);
+      //      textItem.MouseEnter += new MouseEventHandler(onEnter);
 
             // event handlers for releasing a piece
-            textItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
-            textItem.MouseUp += new MouseButtonEventHandler(onClickUp);
-            textItem.MouseLeave += new MouseEventHandler(onLeave);
-
+     //       textItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
+    //        textItem.MouseUp += new MouseButtonEventHandler(onClickUp);
+        //    textItem.MouseLeave += new MouseEventHandler(onLeave);
+            textItem.ContainerActivated += onStartInteraction;
+            textItem.ContainerDeactivated += onStopInteraction;
         }
 
         /// <summary>
@@ -166,6 +180,21 @@ namespace PhotoPaint
                 lineLength += words[i].Length + 1;
             }
             return textToReturn;
+        }
+
+       
+        public void onStartInteraction(object sender, RoutedEventArgs e)
+        {
+            // just a method to test event handlers firing
+            onSelect((ScatterViewItem)sender);
+            Debug.WriteLine("interaction happened");
+        }
+
+        public void onStopInteraction(object sender, RoutedEventArgs e)
+        {
+            // just a method to test event handlers firing
+            onRelease((ScatterViewItem)sender);
+            Debug.WriteLine("interaction happened");
         }
 
         /// <summary>
@@ -240,9 +269,11 @@ namespace PhotoPaint
         /// <param name="item">The piece to move</param>
         public void moveItem(ScatterViewItem item)
         {
+
             Storyboard stb = new Storyboard();
             PointAnimation moveCenter = new PointAnimation();
-            Point endPoint = new Point(1024 / 2, 768 / 2);
+            Point endPoint = new Point(Control.Instance.rnd.Next(1920), Control.Instance.rnd.Next(1080));
+            //Point endPoint = new Point(1024 / 2, 768 / 2);
             if (item.ActualCenter.X > -1)
             {
                 moveCenter.From = item.ActualCenter;
@@ -257,6 +288,7 @@ namespace PhotoPaint
             stb.Children.Add(moveCenter);
             Storyboard.SetTarget(moveCenter, item);
             Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
+            stb.Completed += new EventHandler((sender, e) => onAnimationEnd(sender, e, item));
             stb.Begin(Control.Instance.window1, true);
             //item.Center = endPoint;
 
@@ -272,11 +304,25 @@ namespace PhotoPaint
         }
 
         /// <summary>
+        /// reaction at the end of an animation
+        /// </summary>
+        private void onAnimationEnd(object sender, EventArgs e, ScatterViewItem item)
+        {
+            // start new animation
+            moveItem(item);
+
+        }
+
+        /// <summary>
         /// Stop movement of an article piece
         /// </summary>
         /// <param name="item">The piece to stop</param>
         public void stopItem(ScatterViewItem item)
         {
+            item.Center = item.ActualCenter;
+            foreach (Timeline t in imageStoryboard.Children.ToArray()) {
+                Debug.WriteLine(t.ToString());
+            }
             if (item.Equals(imageItem))
             {
                 imageStoryboard.Stop(Control.Instance.window1);
