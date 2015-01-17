@@ -89,6 +89,7 @@
     <Compile Include="Article.cs" />
     <Compile Include="ArticleList.cs" />
     <Compile Include="Control.cs" />
+    <Compile Include="FinishedArticles.cs" />
     <Compile Include="Island.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerList.cs" />

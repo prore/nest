@@ -23,7 +23,7 @@ namespace PhotoPaint
         //public ScatterViewItem currentImage; // image currently in the image slot
         //public ScatterViewItem currentText; // text currently in the text slot
 
-        public List<Article> finishedArticles; // articles to show in the list of finished articles
+        //public List<Article> finishedArticles; // articles to show in the list of finished articles
 
         /// <summary>
         /// constructor
@@ -32,7 +32,7 @@ namespace PhotoPaint
         {
             //this.orientation = orientation;
             points = 0;
-            finishedArticles = new List<Article>();
+            //finishedArticles = new List<Article>();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace PhotoPaint
         public void resetPlayer()
         {
             points = 0;
-            finishedArticles = new List<Article>();
+            //finishedArticles = new List<Article>();
         }
 
     }

@@ -62,6 +62,7 @@ namespace PhotoPaint
 
         private ArticleList allArticles = new ArticleList();
         private PlayerList players;
+        private FinishedArticles finishedArticles;
         
 
          #region Initalization
@@ -81,6 +82,9 @@ namespace PhotoPaint
 
             players = new PlayerList(4);
             Control.Instance.playerList = players;
+
+            finishedArticles = new FinishedArticles();
+            Control.Instance.finishedArticles = finishedArticles;
         }
 
         /// <summary>

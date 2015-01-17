@@ -332,7 +332,7 @@ namespace PhotoPaint
                 imageOwner.setPoints(imageOwner.getPoints() + 1);
                 imageItem.Center = new Point(-400, -400);
                 textItem.Center = new Point(-400, -400);
-                // TODO add article to list of finished articles
+                Control.Instance.finishedArticles.add(this);
             }
         }
 
