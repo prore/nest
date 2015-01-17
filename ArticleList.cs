@@ -16,12 +16,28 @@ namespace PhotoPaint
 
         public List<Article> articles;
 
+        public readonly int MAXON = 3; // How many articles should be available at the same time?
+        private int appearIndex; // index on which new images start to appear
+
         /// <summary>
         /// constructor
         /// </summary>
         public ArticleList() 
         {
             articles = new List<Article>();
+            appearIndex = MAXON;
+        }
+
+        /// <summary>
+        /// initial setting for the game
+        /// </summary>
+        public void initialize()
+        {
+            for ( int i = 0; i < MAXON; i++ )
+            {
+                articles[i].setStatus(1);
+                articles[i].setStatus(2);
+            }
         }
 
         /// <summary>
@@ -101,6 +117,28 @@ namespace PhotoPaint
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// let new article pieces appear
+        /// </summary>
+        public void showNext()
+        {
+
+            // show next two pieces
+            // TODO make sure that image is not in the water yet
+            if (articles[appearIndex].getStatus() == 0)
+            {
+                articles[appearIndex].setStatus(1);
+                articles[(appearIndex + 1) % (articles.Count())].setStatus(1);
+            }
+            else if (articles[appearIndex].getStatus() == 1)
+            {
+                articles[appearIndex].setStatus(2);
+                articles[(appearIndex + 1) % (articles.Count())].setStatus(2);
+                appearIndex = (appearIndex + 2) % (articles.Count());
+            }
+
         }
 
     }

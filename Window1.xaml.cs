@@ -60,7 +60,7 @@ namespace PhotoPaint
         private static SolidColorBrush buttonBackgroundBrush = new SolidColorBrush (Color.FromArgb(0xCC, 0xCC, 0xCC, 0xCC));
 
 
-        private ArticleList allArticles = new ArticleList();
+        private ArticleList allArticles;
         private PlayerList players;
         private FinishedArticles finishedArticles;
         
@@ -149,7 +149,8 @@ namespace PhotoPaint
 
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnKeyDownHandler); // catch keyboard events
 
-            allArticles.animateAll(); // start moving
+            allArticles.initialize();
+            //allArticles.animateAll(); // start moving
 
         }
 
@@ -192,6 +193,8 @@ namespace PhotoPaint
 
                 string[] files = Directory.GetFiles(directoryPath, "*.jpg");
 
+                allArticles = new ArticleList();
+                Control.Instance.articleList = allArticles;
                 for (int i = 0; i < filteredFiles.Count; i++)
                 {
                     allArticles.articles.Add(new Article(filteredFiles[i]));

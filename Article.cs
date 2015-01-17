@@ -32,6 +32,11 @@ namespace PhotoPaint
         public Player imageOwner; // current owner of image piece
         public Player textOwner; // current owner of text piece
 
+        private int status; // 0 = pieces can appear
+                            // 1 = text appeared
+                            // 2 = image appeared
+                            // 3 = article is not visible, but still in list of finished articles
+
         //public int imagePlayer; // which player (1-4) has the image on his island? 0 = none
         //public int textPlayer; // which player (1-4) has the headline on his island? 0 = none
 
@@ -54,6 +59,11 @@ namespace PhotoPaint
             textItem  = new ScatterViewItem();
             createImage(path);
             createText(path.Substring(0, path.Length - 4) + @".txt");
+
+            // article pieces are not visible from the start
+            status = 0;
+            imageItem.Center = new Point(-1000, -1000);
+            textItem.Center  = new Point(-1000, -1000);
 
         }
 
@@ -330,10 +340,46 @@ namespace PhotoPaint
             if (imageOwner != null && textOwner != null && imageOwner.Equals(textOwner))
             {
                 imageOwner.setPoints(imageOwner.getPoints() + 1);
-                imageItem.Center = new Point(-400, -400);
-                textItem.Center = new Point(-400, -400);
+                setStatus(3);
                 Control.Instance.finishedArticles.add(this);
+                Control.Instance.articleList.showNext();
             }
+        }
+
+        /// <summary>
+        /// get current status of this article (see definition of variable 'status')
+        /// </summary>
+        public int getStatus()
+        {
+            return status;
+        }
+
+        /// <summary>
+        /// set status of this article (see definition of variable 'status')
+        /// </summary>
+        /// <param name="item">The new status for this article</param>
+        public void setStatus(int statusNew)
+        {
+            switch (statusNew)
+            {
+                case 0:
+                    textOwner = null;
+                    imageOwner = null;
+                    break;
+                case 1: 
+                    textItem.Center  = new Point(1920 / 2, 1080 / 2);
+                    moveItem(textItem);
+                    break;
+                case 2: 
+                    imageItem.Center  = new Point(1920 / 2, 1080 / 2);
+                    moveItem(imageItem);
+                    break;
+                case 3:
+                    imageItem.Center = new Point(-1000, -1000);
+                    textItem.Center  = new Point(-1000, -1000);
+                    break;
+            }
+            status = statusNew;
         }
 
     }

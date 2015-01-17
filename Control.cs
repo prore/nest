@@ -20,8 +20,8 @@ namespace PhotoPaint
         public ScatterView mainScatterView;
 
         public PlayerList playerList;
+        public ArticleList articleList;
         public FinishedArticles finishedArticles;
-        //public ArticleList articleList;
 
         //public int player1points;
         //public int player2points;

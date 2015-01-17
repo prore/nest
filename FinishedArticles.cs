@@ -39,6 +39,7 @@ namespace PhotoPaint
         {
             if (finishedArticles.Count >= capacity)
             {
+                finishedArticles[0].setStatus(0);
                 finishedArticles.RemoveAt(0);
             }
             finishedArticles.Add(article);
