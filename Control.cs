@@ -19,11 +19,15 @@ namespace PhotoPaint
         public Window1 window1;
         public ScatterView mainScatterView;
 
-        public int player1points;
-        public int player2points;
+        public PlayerList playerList;
+        public ArticleList articleList;
+        public FinishedArticles finishedArticles;
 
-        public Island island1;
-        public Island island2;
+        //public int player1points;
+        //public int player2points;
+
+        //public Island island1;
+        //public Island island2;
 
         public Random rnd; // seed for random numbers
 
@@ -32,8 +36,8 @@ namespace PhotoPaint
         /// </summary>
         private Control() 
         {
-            player1points = 0;
-            player2points = 0;
+            //player1points = 0;
+            //player2points = 0;
             rnd = new Random();
         }
 

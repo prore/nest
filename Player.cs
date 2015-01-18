@@ -13,23 +13,43 @@ namespace PhotoPaint
     class Player
     {
 
-        public int points;
+        //public readonly int playerId;
 
-        public int orientation; // specifies orientation of elements in degrees to show something to this user
+        private int points;
+
+        //public int orientation; // specifies orientation of elements in degrees to show something to this user
+        public Island island;
 
         //public ScatterViewItem currentImage; // image currently in the image slot
         //public ScatterViewItem currentText; // text currently in the text slot
 
-        public List<Article> finishedArticles; // articles to show in the list of finished articles
+        //public List<Article> finishedArticles; // articles to show in the list of finished articles
 
         /// <summary>
         /// constructor
         /// </summary>
         public Player(int orientation)
         {
-            this.orientation = orientation;
+            //this.orientation = orientation;
             points = 0;
-            finishedArticles = new List<Article>();
+            //finishedArticles = new List<Article>();
+        }
+
+        /// <summary>
+        /// Getter for points
+        /// </summary>
+        public int getPoints()
+        {
+            return points;
+        }
+
+        /// <summary>
+        /// Setter for points
+        /// </summary>
+        public void setPoints(int points)
+        {
+            this.points = points;
+            island.pointDisplay.Content = points;
         }
 
         /// <summary>
@@ -38,7 +58,7 @@ namespace PhotoPaint
         public void resetPlayer()
         {
             points = 0;
-            finishedArticles = new List<Article>();
+            //finishedArticles = new List<Article>();
         }
 
     }

@@ -62,8 +62,9 @@ namespace PhotoPaint
         private static SolidColorBrush buttonBackgroundBrush = new SolidColorBrush (Color.FromArgb(0xCC, 0xCC, 0xCC, 0xCC));
 
 
-        private ArticleList allArticles = new ArticleList();
-        private PlayerList players = new PlayerList(4);
+        private ArticleList allArticles;
+        private PlayerList players;
+        private FinishedArticles finishedArticles;
         
 
          #region Initalization
@@ -80,6 +81,12 @@ namespace PhotoPaint
 
             // listen for changes to the primary InteractiveSurfaceDevice.
             InteractiveSurface.PrimarySurfaceDevice.Changed += OnPrimarySurfaceDeviceChanged;
+
+            players = new PlayerList(4);
+            Control.Instance.playerList = players;
+
+            finishedArticles = new FinishedArticles();
+            Control.Instance.finishedArticles = finishedArticles;
         }
 
         /// <summary>
@@ -124,11 +131,6 @@ namespace PhotoPaint
 
             string path = publicFoldersPath + @"\Pictures\Sample Pictures";
             LoadFilesFrom(path);
-
-            Island i1 = new Island(@"pack://application:,,,/Resources/Island1.png", 1);
-            Island i2 = new Island(@"pack://application:,,,/Resources/Island2.png", 2);
-            //Island i2 = new Island(publicFoldersPath + @"\Pictures\island2.png", 2);
-
            
             string targetVideoPath = publicFoldersPath + @"\Videos\Sample Videos";
 
@@ -149,7 +151,8 @@ namespace PhotoPaint
 
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)OnKeyDownHandler); // catch keyboard events
 
-            allArticles.animateAll(); // start moving
+            allArticles.initialize();
+            //allArticles.animateAll(); // start moving
 
         }
 
@@ -192,6 +195,8 @@ namespace PhotoPaint
 
                 string[] files = Directory.GetFiles(directoryPath, "*.jpg");
 
+                allArticles = new ArticleList();
+                Control.Instance.articleList = allArticles;
                 for (int i = 0; i < filteredFiles.Count; i++)
                 {
                     allArticles.articles.Add(new Article(filteredFiles[i]));

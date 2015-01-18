@@ -29,8 +29,16 @@ namespace PhotoPaint
         public Storyboard imageStoryboard; // current image animation
         public Storyboard textStoryboard; // current text animation
 
-        public int imagePlayer; // which player (1-4) has the image on his island? 0 = none
-        public int textPlayer; // which player (1-4) has the headline on his island? 0 = none
+        public Player imageOwner; // current owner of image piece
+        public Player textOwner; // current owner of text piece
+
+        private int status; // 0 = pieces can appear
+                            // 1 = text appeared
+                            // 2 = image appeared
+                            // 3 = article is not visible, but still in list of finished articles
+
+        //public int imagePlayer; // which player (1-4) has the image on his island? 0 = none
+        //public int textPlayer; // which player (1-4) has the headline on his island? 0 = none
 
         /// <summary>
         /// constructor
@@ -43,14 +51,19 @@ namespace PhotoPaint
             nameID = path;
 
             // no one owns the new pieces yet
-            imagePlayer = 0;
-            textPlayer = 0;
+            imageOwner = null;
+            textOwner = null;
 
             // create image and text object
             imageItem = new ScatterViewItem();
             textItem  = new ScatterViewItem();
             createImage(path);
             createText(path.Substring(0, path.Length - 4) + @".txt");
+
+            // article pieces are not visible from the start
+            status = 0;
+            imageItem.Center = new Point(-1000, -1000);
+            textItem.Center  = new Point(-1000, -1000);
 
         }
 
@@ -76,21 +89,10 @@ namespace PhotoPaint
             Debug.WriteLine("adding event handlers");
 
             // event handlers for taking up a piece
-            //  Uncomment if needed...
-        //    imageItem.TouchDown += new EventHandler<TouchEventArgs>(onTouch);
-    //        imageItem.MouseDown += new MouseButtonEventHandler(onClick);
-    //        imageItem.MouseEnter += new MouseEventHandler(onEnter);  
             
             // should abstract both touch and mouse interactions
             imageItem.ContainerActivated += onStartInteraction;
             imageItem.ContainerDeactivated += onStopInteraction;
-
-
-            
-            // event handlers for releasing a piece
-    //        imageItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
-    //        imageItem.MouseUp += new MouseButtonEventHandler(onClickUp);
-    //        imageItem.MouseLeave += new MouseEventHandler(onLeave);
 
         }
 
@@ -147,14 +149,6 @@ namespace PhotoPaint
 
             Control.Instance.mainScatterView.Items.Add(textItem);
 
-      //      textItem.TouchDown += new EventHandler<TouchEventArgs>(onTouch);
-      //      textItem.MouseDown += new MouseButtonEventHandler(onClick);
-      //      textItem.MouseEnter += new MouseEventHandler(onEnter);
-
-            // event handlers for releasing a piece
-     //       textItem.TouchLeave += new EventHandler<TouchEventArgs>(onTouchLeave);
-    //        textItem.MouseUp += new MouseButtonEventHandler(onClickUp);
-        //    textItem.MouseLeave += new MouseEventHandler(onLeave);
             textItem.ContainerActivated += onStartInteraction;
             textItem.ContainerDeactivated += onStopInteraction;
         }
@@ -198,60 +192,18 @@ namespace PhotoPaint
         }
 
         /// <summary>
-        /// React to a touch event
-        /// </summary>
-        public void onTouch(object sender, TouchEventArgs e)
-        {
-            onSelect((ScatterViewItem)sender);
-        }
-
-        /// <summary>
-        /// React to a click event (doesn't work)
-        /// </summary>
-        public void onClick(object sender, MouseButtonEventArgs e)
-        {
-            onSelect((ScatterViewItem)sender);
-        }
-
-        /// <summary>
-        /// React to a mouseenter event, 
-        /// just a substitute for non-working onClick-Event to test at home
-        /// </summary>
-        public void onEnter(object sender, MouseEventArgs e)
-        {
-            onSelect((ScatterViewItem)sender);
-        }
-
-        /// <summary>
-        /// React to a releasing event (touch)
-        /// </summary>
-        public void onTouchLeave(object sender, TouchEventArgs e)
-        {
-            onRelease((ScatterViewItem)sender);
-        }
-
-        /// <summary>
-        /// React to a releasing event (click) (doesn't work)
-        /// </summary>
-        public void onClickUp(object sender, MouseButtonEventArgs e)
-        {
-            onRelease((ScatterViewItem)sender);
-        }
-
-        /// <summary>
-        /// React to a mouse leaving event, 
-        /// just a substitute for non-working onClickUp-Event to test at home
-        /// </summary>
-        public void onLeave(object sender, MouseEventArgs e)
-        {
-            onRelease((ScatterViewItem)sender);
-        }
-
-        /// <summary>
         /// Selecting a piece
         /// </summary>
         public void onSelect(ScatterViewItem sender)
         {
+            if (sender.Equals(imageItem))
+            {
+                imageOwner = null;
+            }
+            else
+            {
+                textOwner = null;
+            }
             stopItem(sender);
         }
 
@@ -260,7 +212,55 @@ namespace PhotoPaint
         /// </summary>
         public void onRelease(ScatterViewItem sender)
         {
+
+            double distance = 100; // distance in px to snap into a grid
+
+            double x1 = sender.Center.X;
+            double y1 = sender.Center.Y;
+            double x2, y2;
+
+            // snap image pieces
+            if (sender.Equals(imageItem))
+            {
+                // check for each island
+                for (int i = 0; i < Control.Instance.playerList.players.Count(); i++)
+                {
+                    x2 = Control.Instance.playerList.players[i].island.imageSlot.Center.X;
+                    y2 = Control.Instance.playerList.players[i].island.imageSlot.Center.Y;
+
+                    if (Math.Pow(Math.Abs(x1 - x2), 2) + Math.Pow(Math.Abs(y1 - y2), 2) < Math.Pow(distance, 2))
+                    {
+                        sender.Center = Control.Instance.playerList.players[i].island.imageSlot.Center;
+                        sender.Orientation = Control.Instance.playerList.players[i].island.orientation;
+                        imageOwner = Control.Instance.playerList.players[i];
+                        checkFitting();
+                        return;
+                    }
+                }
+            }
+            // snap text pieces
+            else
+            {
+                // check for each island
+                for (int i = 0; i < Control.Instance.playerList.players.Count(); i++)
+                {
+                    x2 = Control.Instance.playerList.players[i].island.textSlot.Center.X;
+                    y2 = Control.Instance.playerList.players[i].island.textSlot.Center.Y;
+
+                    if (Math.Pow(Math.Abs(x1 - x2), 2) + Math.Pow(Math.Abs(y1 - y2), 2) < Math.Pow(distance, 2))
+                    {
+                        sender.Center = Control.Instance.playerList.players[i].island.textSlot.Center;
+                        sender.Orientation = Control.Instance.playerList.players[i].island.orientation;
+                        textOwner = Control.Instance.playerList.players[i];
+                        checkFitting();
+                        return;
+                    }
+                }
+            }
+
+            // move item again if it didn't snap
             moveItem(sender);
+
         }
 
         /// <summary>
@@ -310,7 +310,6 @@ namespace PhotoPaint
         {
             // start new animation
             moveItem(item);
-
         }
 
         /// <summary>
@@ -331,6 +330,56 @@ namespace PhotoPaint
             {
                 textStoryboard.Stop(Control.Instance.window1);
             }
+        }
+
+        /// <summary>
+        /// checks if both pieces are currently on the same island and reacts to it
+        /// </summary>
+        private void checkFitting()
+        {
+            if (imageOwner != null && textOwner != null && imageOwner.Equals(textOwner))
+            {
+                imageOwner.setPoints(imageOwner.getPoints() + 1);
+                setStatus(3);
+                Control.Instance.finishedArticles.add(this);
+                Control.Instance.articleList.showNext();
+            }
+        }
+
+        /// <summary>
+        /// get current status of this article (see definition of variable 'status')
+        /// </summary>
+        public int getStatus()
+        {
+            return status;
+        }
+
+        /// <summary>
+        /// set status of this article (see definition of variable 'status')
+        /// </summary>
+        /// <param name="item">The new status for this article</param>
+        public void setStatus(int statusNew)
+        {
+            switch (statusNew)
+            {
+                case 0:
+                    textOwner = null;
+                    imageOwner = null;
+                    break;
+                case 1: 
+                    textItem.Center  = new Point(1920 / 2, 1080 / 2);
+                    moveItem(textItem);
+                    break;
+                case 2: 
+                    imageItem.Center  = new Point(1920 / 2, 1080 / 2);
+                    moveItem(imageItem);
+                    break;
+                case 3:
+                    imageItem.Center = new Point(-1000, -1000);
+                    textItem.Center  = new Point(-1000, -1000);
+                    break;
+            }
+            status = statusNew;
         }
 
     }

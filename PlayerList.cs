@@ -20,6 +20,7 @@ namespace PhotoPaint
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 players.Add(new Player(i * 90));
+                players[i].island = new Island(@"pack://application:,,,/Resources/Island1.png", i);
             }
         }
 
@@ -32,6 +33,21 @@ namespace PhotoPaint
             {
                 player.resetPlayer();
             }
+        }
+
+        /// <summary>
+        /// get the player who is the owner of a given island
+        /// </summary>
+        public Player getPlayer(Island island)
+        {
+            foreach (Player player in players)
+            {
+                if (player.island.Equals(island))
+                {
+                    return player;
+                }
+            }
+            return null;
         }
 
     }
