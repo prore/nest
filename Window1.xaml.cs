@@ -41,7 +41,7 @@ namespace PhotoPaint
         /// </summary>
         private readonly Dictionary<Stroke, Stroke> newStrokes = new Dictionary<Stroke, Stroke>();
 
-        private Storyboard stb;
+        //private Storyboard stb;
 
         /// <summary>
         /// Duration of playback loop (in seconds) when no video is present.
@@ -58,8 +58,8 @@ namespace PhotoPaint
         /// <summary>
         /// Brushes used for movie buttons
         /// </summary>
-        private static SolidColorBrush buttonHighlightBrush = new SolidColorBrush (Color.FromArgb(0xCC, 0x99, 0x99, 0x99));
-        private static SolidColorBrush buttonBackgroundBrush = new SolidColorBrush (Color.FromArgb(0xCC, 0xCC, 0xCC, 0xCC));
+        //private static SolidColorBrush buttonHighlightBrush = new SolidColorBrush (Color.FromArgb(0xCC, 0x99, 0x99, 0x99));
+        //private static SolidColorBrush buttonBackgroundBrush = new SolidColorBrush (Color.FromArgb(0xCC, 0xCC, 0xCC, 0xCC));
 
 
         private ArticleList allArticles;
@@ -128,7 +128,8 @@ namespace PhotoPaint
             // These are default OS folders that will always be in these locations
             // unless the user has deliberately moved them.
             string publicFoldersPath = Environment.GetEnvironmentVariable("public");
-            string path = publicFoldersPath + @"\Pictures\Sample Pictures";
+            //string path = publicFoldersPath + @"\Pictures\Sample Pictures";
+            string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location.ToString()) + @"\..\..\Resources\Articles";
 
             //Load images and texts from Resource Folder
             //string path = @"pack://application:,,,/Resources/Articles";
@@ -203,6 +204,11 @@ namespace PhotoPaint
                 {
                     allArticles.articles.Add(new Article(filteredFiles[i]));
                 }
+
+            }
+            else
+            {
+                MessageBox.Show("Error: Article directory not found.");
             }
         }
 
@@ -212,20 +218,20 @@ namespace PhotoPaint
         /// Automatically move an article piece
         /// </summary>
         /// <param name="item">The piece to move</param>
-        private void MoveItem(ScatterViewItem item)
-        {
-            stb = new Storyboard();
-            PointAnimation moveCenter = new PointAnimation();
-            Point endPoint = new Point(1024 / 2, 768 / 2);
-            moveCenter.From = item.ActualCenter;
-            moveCenter.To = endPoint;
-            moveCenter.Duration = new Duration(TimeSpan.FromSeconds(10.0));
-            moveCenter.FillBehavior = FillBehavior.Stop;
-            stb.Children.Add(moveCenter);
-            Storyboard.SetTarget(moveCenter, item);
-            Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
-            stb.Begin(this);
-        }
+        //private void MoveItem(ScatterViewItem item)
+        //{
+        //    stb = new Storyboard();
+        //    PointAnimation moveCenter = new PointAnimation();
+        //    Point endPoint = new Point(1024 / 2, 768 / 2);
+        //    moveCenter.From = item.ActualCenter;
+        //    moveCenter.To = endPoint;
+        //    moveCenter.Duration = new Duration(TimeSpan.FromSeconds(10.0));
+        //    moveCenter.FillBehavior = FillBehavior.Stop;
+        //    stb.Children.Add(moveCenter);
+        //    Storyboard.SetTarget(moveCenter, item);
+        //    Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
+        //    stb.Begin(this);
+        //}
 
         /// <summary>
         /// Adds handlers for window availability events.

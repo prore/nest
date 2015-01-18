@@ -337,6 +337,7 @@ namespace PhotoPaint
         public void stopItem(ScatterViewItem item)
         {
             item.Center = item.ActualCenter;
+            item.Orientation = item.ActualOrientation;
             //foreach (Timeline t in imageStoryboard.Children.ToArray()) {
             //    Debug.WriteLine(t.ToString());
             //}

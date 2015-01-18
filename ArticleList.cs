@@ -131,7 +131,7 @@ namespace PhotoPaint
             Article article2 = null;
 
             // check requirement for next while loop
-            if (articles.Count < MAXON + 2)
+            if (articles.Count() < MAXON + 3 + 2)
             {
                 MessageBox.Show("Not enough articles found");
                 return;
