@@ -8,6 +8,9 @@ using System.Windows.Media.Imaging;
 using System.Windows;
 using Microsoft.Surface.Presentation;
 using System.Windows.Media;
+using Microsoft.Surface.Presentation.Generic;
+using System.Diagnostics;
+
 
 /*
  * a players island
@@ -121,6 +124,7 @@ namespace PhotoPaint
             pointDisplay.IsTopmostOnActivation = false;
 
             //setPosValues();
+           
 
             createIsland();
             createSlots();
@@ -181,7 +185,27 @@ namespace PhotoPaint
             //Image img1 = new Image();
             //img1.Source = new BitmapImage(new Uri(path));
             //island.Content = img1;
-            island.Background = Brushes.DarkOliveGreen;
+//            island.Background = Brushes.DarkOliveGreen;
+
+            BitmapImage img = new BitmapImage();
+            //load the image from a local resource
+            img.BeginInit();
+            img.UriSource = new Uri("pack://application:,,,/Resources/" + "island_yellow.png", UriKind.Absolute);
+            img.EndInit();
+
+            island.Background = new ImageBrush(img);
+
+            island.ShowsActivationEffects = false;
+            RoutedEventHandler loadedEventHandler = null;
+            loadedEventHandler = new RoutedEventHandler(delegate
+            {
+                island.Loaded -= loadedEventHandler;
+                Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome ssc;
+                ssc = island.Template.FindName("shadow", island) as Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome;
+                ssc.Visibility = Visibility.Hidden;
+            });
+            island.Loaded += loadedEventHandler;
+
 
         }
 
@@ -202,7 +226,29 @@ namespace PhotoPaint
             imageSlot.CanRotate = false;
             imageSlot.CanScale = false;
             //imageSlot.IsEnabled = false;
+
+            imageSlot.Background = new SolidColorBrush(Colors.Transparent);
+
+            BitmapImage img = new BitmapImage();
+            //load the image from a local resource
+            img.BeginInit();
+            img.UriSource = new Uri("pack://application:,,,/Resources/" + "example_transparent.png", UriKind.Absolute);
+            img.EndInit();
+
+            imageSlot.Background = new ImageBrush(img);
+
             imageSlot.ShowsActivationEffects = false;
+            RoutedEventHandler loadedEventHandler = null;
+            loadedEventHandler = new RoutedEventHandler(delegate
+            {
+                imageSlot.Loaded -= loadedEventHandler;
+                Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome ssc;
+                ssc = imageSlot.Template.FindName("shadow", imageSlot) as Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome;
+                ssc.Visibility = Visibility.Hidden;
+            });
+            imageSlot.Loaded += loadedEventHandler;
+
+
 
             textSlot.Width = textSlotSize[0];
             textSlot.Height = textSlotSize[1];
