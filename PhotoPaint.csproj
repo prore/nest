@@ -110,6 +110,16 @@
     </Content>
     <Resource Include="Resources\example_transparent.png" />
     <Resource Include="Resources\island_yellow.png" />
+    <Resource Include="Resources\Articles\article1.png" />
+    <Resource Include="Resources\Articles\article2.png" />
+    <Resource Include="Resources\Articles\article3.png" />
+    <Resource Include="Resources\Articles\article4.png" />
+    <Resource Include="Resources\Articles\article5.png" />
+    <Resource Include="Resources\Articles\article1.txt" />
+    <Resource Include="Resources\Articles\article2.txt" />
+    <Resource Include="Resources\Articles\article3.txt" />
+    <Resource Include="Resources\Articles\article4.txt" />
+    <Resource Include="Resources\Articles\article5.txt" />
     <Content Include="Resources\video.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -121,5 +131,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -143,9 +143,9 @@ namespace PhotoPaint
             textItem.Width = 427 / 2.5;
             textItem.MinWidth = 427 / 2.5;
             textItem.MaxWidth = 427 / 2.5;
-            textItem.FontSize = 14;
+            textItem.FontSize = 12;
             textItem.Background = Brushes.White;
-            textItem.Padding = new Thickness(8);
+            textItem.Padding = new Thickness(4);
 
             Control.Instance.mainScatterView.Items.Add(textItem);
 

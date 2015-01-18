@@ -128,10 +128,12 @@ namespace PhotoPaint
             // These are default OS folders that will always be in these locations
             // unless the user has deliberately moved them.
             string publicFoldersPath = Environment.GetEnvironmentVariable("public");
-
             string path = publicFoldersPath + @"\Pictures\Sample Pictures";
+
+            //Load images and texts from Resource Folder
+            //string path = @"pack://application:,,,/Resources/Articles";
             LoadFilesFrom(path);
-           
+
             string targetVideoPath = publicFoldersPath + @"\Videos\Sample Videos";
 
             mBackground.BeginInit();
