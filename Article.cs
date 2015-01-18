@@ -319,9 +319,9 @@ namespace PhotoPaint
         public void stopItem(ScatterViewItem item)
         {
             item.Center = item.ActualCenter;
-            foreach (Timeline t in imageStoryboard.Children.ToArray()) {
-                Debug.WriteLine(t.ToString());
-            }
+            //foreach (Timeline t in imageStoryboard.Children.ToArray()) {
+            //    Debug.WriteLine(t.ToString());
+            //}
             if (item.Equals(imageItem))
             {
                 imageStoryboard.Stop(Control.Instance.window1);

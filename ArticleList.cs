@@ -126,17 +126,38 @@ namespace PhotoPaint
         {
 
             // show next two pieces
-            // TODO make sure that image is not in the water yet
-            if (articles[appearIndex].getStatus() == 0)
+
+            Article article1 = null;
+            Article article2 = null;
+
+            // check requirement for next while loop
+            if (articles.Count < MAXON + 2)
             {
-                articles[appearIndex].setStatus(1);
-                articles[(appearIndex + 1) % (articles.Count())].setStatus(1);
+                MessageBox.Show("Not enough articles found");
+                return;
             }
-            else if (articles[appearIndex].getStatus() == 1)
+
+            // get first article to show a piece from
+            while (article1 == null)
             {
-                articles[appearIndex].setStatus(2);
-                articles[(appearIndex + 1) % (articles.Count())].setStatus(2);
-                appearIndex = (appearIndex + 2) % (articles.Count());
+                if (articles[appearIndex].getStatus() == 0 || articles[appearIndex].getStatus() == 1)
+                {
+                    article1 = articles[appearIndex];
+                    article1.setStatus(article1.getStatus() + 1);
+                }
+                appearIndex = (appearIndex + 1) % articles.Count;
+            }
+
+            // get second article to show a piece from
+            int index2 = (appearIndex + 1) % articles.Count;
+            while (article2 == null)
+            {
+                if (articles[index2].getStatus() == article1.getStatus() - 1)
+                {
+                    article2 = articles[index2];
+                    article2.setStatus(article2.getStatus() + 1);
+                }
+                index2 = (index2 + 1) % articles.Count;
             }
 
         }
