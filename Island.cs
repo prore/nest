@@ -185,7 +185,27 @@ namespace PhotoPaint
             //Image img1 = new Image();
             //img1.Source = new BitmapImage(new Uri(path));
             //island.Content = img1;
-            island.Background = Brushes.DarkOliveGreen;
+//            island.Background = Brushes.DarkOliveGreen;
+
+            BitmapImage img = new BitmapImage();
+            //load the image from a local resource
+            img.BeginInit();
+            img.UriSource = new Uri("pack://application:,,,/Resources/" + "island_yellow.png", UriKind.Absolute);
+            img.EndInit();
+
+            island.Background = new ImageBrush(img);
+
+            island.ShowsActivationEffects = false;
+            RoutedEventHandler loadedEventHandler = null;
+            loadedEventHandler = new RoutedEventHandler(delegate
+            {
+                island.Loaded -= loadedEventHandler;
+                Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome ssc;
+                ssc = island.Template.FindName("shadow", island) as Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome;
+                ssc.Visibility = Visibility.Hidden;
+            });
+            island.Loaded += loadedEventHandler;
+
 
         }
 

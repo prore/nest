@@ -109,6 +109,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\example_transparent.png" />
+    <Resource Include="Resources\island_yellow.png" />
     <Content Include="Resources\video.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
