@@ -282,6 +282,24 @@ namespace PhotoPaint
             {
                 moveCenter.From = new Point(1920 / 2, 1080 / 2);
             }
+
+            //Rotation Animation
+            DoubleAnimation turnAnimation = new DoubleAnimation();
+            if (item.Orientation >= 0)
+            {
+                turnAnimation.From = item.Orientation;
+            }
+            else
+            {
+                turnAnimation.From = item.Orientation = 0;
+            }
+            //rotates to a rnd orientation between 0 and 360
+            turnAnimation.To = Control.Instance.rnd.NextDouble() * 360;
+            turnAnimation.Duration = new Duration(TimeSpan.FromSeconds(10.0)); //same duration as movement
+            stb.Children.Add(turnAnimation);
+            Storyboard.SetTarget(turnAnimation, item);
+            Storyboard.SetTargetProperty(turnAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
+             
             moveCenter.To = endPoint;
             moveCenter.Duration = new Duration(TimeSpan.FromSeconds(10.0));
             moveCenter.FillBehavior = FillBehavior.Stop;
