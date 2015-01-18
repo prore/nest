@@ -64,6 +64,7 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Surface.Presentation.Generic, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Xaml" />
@@ -107,6 +108,7 @@
     <Content Include="InstalledAppInfo\AppIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\example_transparent.png" />
     <Content Include="Resources\video.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

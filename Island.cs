@@ -8,6 +8,9 @@ using System.Windows.Media.Imaging;
 using System.Windows;
 using Microsoft.Surface.Presentation;
 using System.Windows.Media;
+using Microsoft.Surface.Presentation.Generic;
+using System.Diagnostics;
+
 
 /*
  * a players island
@@ -121,6 +124,7 @@ namespace PhotoPaint
             pointDisplay.IsTopmostOnActivation = false;
 
             //setPosValues();
+           
 
             createIsland();
             createSlots();
@@ -202,7 +206,29 @@ namespace PhotoPaint
             imageSlot.CanRotate = false;
             imageSlot.CanScale = false;
             //imageSlot.IsEnabled = false;
+
+            imageSlot.Background = new SolidColorBrush(Colors.Transparent);
+
+            BitmapImage img = new BitmapImage();
+            //load the image from a local resource
+            img.BeginInit();
+            img.UriSource = new Uri("pack://application:,,,/Resources/" + "example_transparent.png", UriKind.Absolute);
+            img.EndInit();
+
+            imageSlot.Background = new ImageBrush(img);
+
             imageSlot.ShowsActivationEffects = false;
+            RoutedEventHandler loadedEventHandler = null;
+            loadedEventHandler = new RoutedEventHandler(delegate
+            {
+                imageSlot.Loaded -= loadedEventHandler;
+                Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome ssc;
+                ssc = imageSlot.Template.FindName("shadow", imageSlot) as Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome;
+                ssc.Visibility = Visibility.Hidden;
+            });
+            imageSlot.Loaded += loadedEventHandler;
+
+
 
             textSlot.Width = textSlotSize[0];
             textSlot.Height = textSlotSize[1];
