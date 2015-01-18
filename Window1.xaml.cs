@@ -271,10 +271,10 @@ namespace PhotoPaint
        /// <param name="args">The arguments for the event.</param>
        private void onMediaEnded(object sender, RoutedEventArgs args)
        {
-           mBackground.Pause();
-           mBackground.Position = new TimeSpan(0, 0, 1);
+   //        mBackground.Pause();
+           mBackground.Position = new TimeSpan(0, 0, 0);
 
-           mBackground.Play();
+    //       mBackground.Play();
        }
 
 
