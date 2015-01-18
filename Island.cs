@@ -10,6 +10,7 @@ using Microsoft.Surface.Presentation;
 using System.Windows.Media;
 using Microsoft.Surface.Presentation.Generic;
 using System.Diagnostics;
+using System.Windows.Media.Animation;
 
 
 /*
@@ -204,15 +205,19 @@ namespace PhotoPaint
             island.Background = new ImageBrush(img);
 
             island.ShowsActivationEffects = false;
-            RoutedEventHandler loadedEventHandler = null;
-            loadedEventHandler = new RoutedEventHandler(delegate
-            {
-                island.Loaded -= loadedEventHandler;
-                Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome ssc;
-                ssc = island.Template.FindName("shadow", island) as Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome;
-                ssc.Visibility = Visibility.Hidden;
-            });
-            island.Loaded += loadedEventHandler;
+
+            // make background transparent without shadows
+            island.Loaded += makeTransparent;
+
+            //RoutedEventHandler loadedEventHandler = null;
+            //loadedEventHandler = new RoutedEventHandler(delegate
+            //{
+            //    island.Loaded -= loadedEventHandler;
+            //    Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome ssc;
+            //    ssc = island.Template.FindName("shadow", island) as Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome;
+            //    ssc.Visibility = Visibility.Hidden;
+            //});
+            //island.Loaded += loadedEventHandler;
 
 
         }
@@ -245,16 +250,16 @@ namespace PhotoPaint
 
             imageSlot.Background = new ImageBrush(img);
 
-            imageSlot.ShowsActivationEffects = false;
-            RoutedEventHandler loadedEventHandler = null;
-            loadedEventHandler = new RoutedEventHandler(delegate
-            {
-                imageSlot.Loaded -= loadedEventHandler;
-                Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome ssc;
-                ssc = imageSlot.Template.FindName("shadow", imageSlot) as Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome;
-                ssc.Visibility = Visibility.Hidden;
-            });
-            imageSlot.Loaded += loadedEventHandler;
+            //imageSlot.ShowsActivationEffects = false;
+            //RoutedEventHandler loadedEventHandler = null;
+            //loadedEventHandler = new RoutedEventHandler(delegate
+            //{
+            //    imageSlot.Loaded -= loadedEventHandler;
+            //    Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome ssc;
+            //    ssc = imageSlot.Template.FindName("shadow", imageSlot) as Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome;
+            //    ssc.Visibility = Visibility.Hidden;
+            //});
+            //imageSlot.Loaded += loadedEventHandler;
 
 
 
@@ -264,6 +269,8 @@ namespace PhotoPaint
                                         positionBase[yValue] + textSlotOffset[yValue]);
 
             textSlot.Orientation = orientation;
+
+            textSlot.Background = Brushes.Transparent;
 
             textSlot.CanMove = false;
             textSlot.CanRotate = false;
@@ -291,6 +298,9 @@ namespace PhotoPaint
             finishedArticles.CanScale = false;
             //finishedArticles.IsEnabled = false;
             finishedArticles.ShowsActivationEffects = false;
+
+            finishedArticles.Background = Brushes.Transparent;
+            //finishedArticles.Visibility = Visibility.Hidden; // object not really needed anymore
 
         }
 
@@ -400,6 +410,8 @@ namespace PhotoPaint
                 text.ShowsActivationEffects = false;
 
                 text.Background = Brushes.Transparent;
+                text.Loaded += makeTransparent;
+
                 text.Foreground = Brushes.White;
                 text.FontSize = 10;
                 text.HorizontalContentAlignment = HorizontalAlignment.Left;
@@ -439,6 +451,7 @@ namespace PhotoPaint
                 image.ShowsActivationEffects = false;
 
                 image.Background = Brushes.Transparent;
+                image.Loaded += makeTransparent;
 
                 image.Padding = new Thickness(6);
 
@@ -466,15 +479,45 @@ namespace PhotoPaint
 
             for (int i = 0; i < listImages.Count() - 1; i++ )
             {
-                listImages[i].Center = new Point(listImages[i + 1].Center.X, listImages[i + 1].Center.Y);
-                listTexts[i].Center = new Point(listTexts[i + 1].Center.X, listTexts[i + 1].Center.Y);
+
+                if (i == nextIndexToChange)
+                {
+                    // hide part that gets changed
+                    listImages[i].Opacity = 0;
+                    listTexts[i].Opacity = 0;
+                    // change position
+                    listImages[i].Center = listImages[i + 1].ActualCenter;
+                    listTexts[i].Center = listTexts[i + 1].ActualCenter;
+                }
+                else
+                {
+                    // move articles
+                    moveTo(listImages[i], listImages[i + 1].Center);
+                    moveTo(listTexts[i], listTexts[i + 1].Center);
+                }
+
+                //listImages[i].Center = new Point(listImages[i + 1].Center.X, listImages[i + 1].Center.Y);
+                //listTexts[i].Center = new Point(listTexts[i + 1].Center.X, listTexts[i + 1].Center.Y);
             }
 
-            listImages[listTexts.Count() - 1].Center = positionCacheImage;
-            listTexts[listTexts.Count() - 1].Center = positionCacheText;
+            if (listTexts.Count() - 1 == nextIndexToChange)
+            {
+                listImages[listTexts.Count() - 1].Center = positionCacheImage;
+                listTexts[listTexts.Count() - 1].Center = positionCacheText;
+            }
+            else
+            {
+                moveTo(listImages[listTexts.Count() - 1], positionCacheImage);
+                moveTo(listTexts[listTexts.Count() - 1], positionCacheText);
+            }
+
+            //listImages[listTexts.Count() - 1].Center = positionCacheImage;
+            //listTexts[listTexts.Count() - 1].Center = positionCacheText;
 
             if ( nextIndexToChange == -1)
-                nextIndexToChange = listTexts.Count() - 1;
+                nextIndexToChange = listTexts.Count() - 1; // quick and dirty bugfix
+
+            // load data of new article
 
             Image img1 = new Image();
             listImages[nextIndexToChange].Content = img1;
@@ -484,11 +527,79 @@ namespace PhotoPaint
             listTexts[nextIndexToChange].Content = finishedArticles[finishedArticles.Count() - 1].textItem.Content;
             listTexts[nextIndexToChange].Background = finishedArticles[finishedArticles.Count() - 1].imageOwner.island.color;
 
+            // show new article
+
+            blend(listImages[nextIndexToChange]);
+            blend(listTexts[nextIndexToChange]);
+
+            //DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+            //myDoubleAnimation.From = 0.0;
+            //myDoubleAnimation.To = 1.0;
+            //myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            //Storyboard myStoryboard;
+            //myStoryboard = new Storyboard();
+            //myStoryboard.Children.Add(myDoubleAnimation);
+            //Storyboard.SetTarget(myDoubleAnimation, listImages[nextIndexToChange]);
+            //Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath(ScatterViewItem.OpacityProperty));
+            //myStoryboard.Begin();
+
+            // set next piece to change
             if (nextIndexToChange <= 0)
                 nextIndexToChange = listTexts.Count() - 1;
             else
                 nextIndexToChange -= 1;
 
+        }
+
+        /// <summary>
+        /// move item to a given point
+        /// </summary>
+        /// <parameter name="item">The item to move</parameter>
+        /// <parameter name="point">The point to move to</parameter>
+        private void moveTo(ScatterViewItem item, Point point)
+        {
+            Storyboard stb = new Storyboard();
+            PointAnimation moveCenter = new PointAnimation();
+            Point endPoint = point;
+            moveCenter.To = endPoint;
+            moveCenter.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+            moveCenter.FillBehavior = FillBehavior.Stop;
+            stb.Children.Add(moveCenter);
+            Storyboard.SetTarget(moveCenter, item);
+            Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
+            //stb.Completed += new EventHandler((sender, e) => onAnimationEnd(sender, e, item));
+            stb.Begin(Control.Instance.window1, true);
+            item.Center = endPoint;
+        }
+
+        /// <summary>
+        /// blend in an item
+        /// </summary>
+        /// <parameter name="item">The item to blend in</parameter>
+        /// <parameter name="point">The point to move to</parameter>
+        private void blend(ScatterViewItem item)
+        {
+            DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+            myDoubleAnimation.From = 0.0;
+            myDoubleAnimation.To = 1.0;
+            myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            Storyboard myStoryboard;
+            myStoryboard = new Storyboard();
+            myStoryboard.Children.Add(myDoubleAnimation);
+            Storyboard.SetTarget(myDoubleAnimation, item);
+            Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath(ScatterViewItem.OpacityProperty));
+            myStoryboard.Begin();
+        }
+
+        /// <summary>
+        /// make an object's background transparent including removing the shadow
+        /// </summary>
+        private void makeTransparent(object sender, EventArgs e)
+        {
+            ((ScatterViewItem)sender).Loaded -= makeTransparent;
+            Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome ssc;
+            ssc = ((ScatterViewItem)sender).Template.FindName("shadow", ((ScatterViewItem)sender)) as Microsoft.Surface.Presentation.Generic.SurfaceShadowChrome;
+            ssc.Visibility = Visibility.Hidden;
         }
 
     }
