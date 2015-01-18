@@ -13,7 +13,7 @@ namespace PhotoPaint
     {
 
         private List<Article> finishedArticles;
-        private int capacity = 3; // how many articles can be shown
+        public readonly int capacity = 3; // how many articles can be shown
 
         /// <summary>
         /// constructor
@@ -51,10 +51,14 @@ namespace PhotoPaint
                 headlines += Environment.NewLine;
                 headlines += Environment.NewLine;
             }
-            Control.Instance.playerList.players[0].island.finishedArticles.Content = headlines;
-            Control.Instance.playerList.players[1].island.finishedArticles.Content = headlines;
-            Control.Instance.playerList.players[2].island.finishedArticles.Content = headlines;
-            Control.Instance.playerList.players[3].island.finishedArticles.Content = headlines;
+
+            foreach (Player player in Control.Instance.playerList.players) {
+                player.island.updateArticles();
+            }
+            //Control.Instance.playerList.players[0].island.finishedArticles.Content = headlines;
+            //Control.Instance.playerList.players[1].island.finishedArticles.Content = headlines;
+            //Control.Instance.playerList.players[2].island.finishedArticles.Content = headlines;
+            //Control.Instance.playerList.players[3].island.finishedArticles.Content = headlines;
         }
 
         /// <summary>

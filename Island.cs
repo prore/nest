@@ -26,6 +26,9 @@ namespace PhotoPaint
         public ScatterViewItem finishedArticles; // area for finished articles
         public ScatterViewItem pointDisplay; // element to show current points
 
+        public List<ScatterViewItem> listImages; // images of finished articles
+        public List<ScatterViewItem> listTexts; // texts of finished articles
+
         private String path;
         public int playerNumber;
 
@@ -136,6 +139,8 @@ namespace PhotoPaint
             Control.Instance.mainScatterView.Items.Add(textSlot);
             Control.Instance.mainScatterView.Items.Add(finishedArticles);
             Control.Instance.mainScatterView.Items.Add(pointDisplay);
+
+            createArticles();
 
         }
 
@@ -317,6 +322,159 @@ namespace PhotoPaint
             pointDisplay.VerticalContentAlignment = VerticalAlignment.Center;
 
             pointDisplay.Padding = new Thickness(0);
+        }
+
+        /// <summary>
+        /// create article templates for the list
+        /// </summary>
+        private void createArticles()
+        {
+
+            int articlesToShow = 3;
+
+            double imageHeightFactor = 0.8; // how big is an image in a line? 1 = 100%;
+            int[] imageSize = new int[2];
+            imageSize[1] = (int)(finishedArticlesSize[1] / articlesToShow * imageHeightFactor);
+            imageSize[0] = (int)(imageSize[1] * (4f / 3));
+
+            int[] articleSize = new int[] { finishedArticlesSize[0] - imageSize[0],
+                                            finishedArticlesSize[1] / articlesToShow};
+
+            listImages = new List<ScatterViewItem>();
+            listTexts = new List<ScatterViewItem>();
+
+            ScatterViewItem image;
+            ScatterViewItem text;
+
+            int[] startPositionOffset = new int[2]; // offset of first article
+
+            for (int i = 0; i < articlesToShow; i++)
+            {
+                image = new ScatterViewItem();
+                text = new ScatterViewItem();
+                listImages.Add(image);
+                listTexts.Add(text);
+
+                // formatting text
+
+                text.Width = articleSize[0];
+                text.MinWidth = articleSize[0];
+                text.Height = articleSize[1];
+                text.MinHeight = articleSize[1];
+
+                startPositionOffset[xValue] = 0;
+                startPositionOffset[yValue] = articlesToShow / 2 * articleSize[1] * -1;
+
+                int direction = 1;
+                if (orientation == 0 || orientation == 270)
+                {
+                    startPositionOffset[yValue] *= -1;
+                }
+                else
+                {
+                    direction *= -1;
+                }
+                int imageIndentDirection = 1;
+                if (orientation == 180 || orientation == 270)
+                {
+                    imageIndentDirection *= -1;
+                }
+
+                if (xValue == 0)
+                {
+                    text.Center = new Point(positionBase[xValue] + finishedArticlesOffset[xValue] - startPositionOffset[0] + (imageSize[0] / 2) * imageIndentDirection,
+                                            positionBase[yValue] + finishedArticlesOffset[yValue] - startPositionOffset[1] + i * articleSize[1] * direction);
+                }
+                else
+                {
+                    text.Center = new Point(positionBase[xValue] + finishedArticlesOffset[xValue] - startPositionOffset[0] + i * articleSize[1] * direction,
+                                            positionBase[yValue] + finishedArticlesOffset[yValue] - startPositionOffset[1] + (imageSize[0] / 2) * imageIndentDirection);
+                }
+
+                text.Orientation = orientation;
+
+                text.CanMove = false;
+                text.CanRotate = false;
+                text.CanScale = false;
+                text.ShowsActivationEffects = false;
+
+                text.Content = "article info";
+
+                text.Background = color;
+                text.Foreground = Brushes.White;
+                text.FontSize = 10;
+                text.HorizontalContentAlignment = HorizontalAlignment.Left;
+                text.VerticalContentAlignment = VerticalAlignment.Center;
+
+                text.Padding = new Thickness(6);
+
+                text.ZIndex = 3;
+
+                Control.Instance.mainScatterView.Items.Add(text);
+
+                // formatting image
+
+                image.Width = imageSize[0];
+                image.MinWidth = imageSize[0];
+                image.Height = imageSize[1];
+                image.MinHeight = imageSize[1];
+
+                if (xValue == 0)
+                {
+                    image.Center = new Point(text.Center.X - (text.Width / 2 + image.Width / 2) * imageIndentDirection,
+                                             text.Center.Y);
+                }
+                else
+                {
+                    image.Center = new Point(text.Center.X,
+                                             text.Center.Y - (text.Width / 2 + image.Width / 2) * imageIndentDirection);
+                }
+
+                image.Orientation = orientation;
+
+                image.CanMove = false;
+                image.CanRotate = false;
+                image.CanScale = false;
+                image.ShowsActivationEffects = false;
+
+                image.Background = Brushes.Yellow;
+
+                image.Padding = new Thickness(0);
+
+                image.ZIndex = 3;
+
+                Control.Instance.mainScatterView.Items.Add(image);
+
+            }
+
+        }
+
+        /// <summary>
+        /// update list of finished articles
+        /// </summary>
+        public void updateArticles()
+        {
+
+            List<Article> finishedArticles = Control.Instance.finishedArticles.getList();
+
+            for (int i = 0; i < listImages.Count(); i++ )
+            {
+
+                if (i < finishedArticles.Count())
+                {
+                    Image img1 = new Image();
+                    listImages[listImages.Count() - 1 - i].Content = img1;
+                    ((Image)listImages[listImages.Count() - 1 - i].Content).Source = new BitmapImage(new Uri(finishedArticles[i].nameID));
+                    listTexts[listImages.Count() - 1 - i].Content = finishedArticles[i].textItem.Content;
+                }
+                else
+                {
+                    listImages[listImages.Count() - 1 - i].Content = null;
+                    listTexts[listImages.Count() - 1 - i].Content = null;
+                }
+
+            }
+
         }
 
     }
