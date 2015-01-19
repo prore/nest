@@ -1,4 +1,4 @@
-<s:SurfaceWindow x:Class="NeSt.Window1" 
+<Window x:Class="NeSt.Window1" 
                  Name="mWindow"
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
@@ -17,4 +17,4 @@
         </s:ScatterView>
     </Grid>
 
-</s:SurfaceWindow>
+</Window>

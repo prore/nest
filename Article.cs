@@ -63,9 +63,10 @@ namespace NeSt
 
             // article pieces are not visible from the start
             status = 0;
-            imageItem.Center = new Point(-1000, -1000);
-            textItem.Center  = new Point(-1000, -1000);
-
+     //       imageItem.Center = new Point(-1000, -1000);
+            imageItem.Visibility = Visibility.Hidden;
+     //       textItem.Center  = new Point(-1000, -1000);
+            textItem.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -453,11 +454,13 @@ namespace NeSt
                     break;
                 case 1:
                     blend(textItem, false);
+                    textItem.Visibility = Visibility.Visible;
                     textItem.Center  = new Point(1920 / 2, 1080 / 2);
                     moveItem(textItem);
                     break;
                 case 2:
                     blend(imageItem, false);
+                    imageItem.Visibility = Visibility.Visible;
                     imageItem.Center  = new Point(1920 / 2, 1080 / 2);
                     moveItem(imageItem);
                     break;
