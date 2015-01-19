@@ -20,6 +20,7 @@ using System.Linq;
 using System.Collections;
 
 using System.Windows.Media.Animation;
+using System.Threading;
 
 namespace PhotoPaint
 {
@@ -167,20 +168,7 @@ namespace PhotoPaint
         // TODO: expand for service tasks (resetting, style switching)
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return)
-            {
-                MessageBox.Show("Tastatureingabe erkannt");
-            }
-            else if (e.Key == Key.A)
-            {
-                // start animations
-                allArticles.animateAll();
-            }
-            else if (e.Key == Key.S)
-            {
-                // stop animations
-                allArticles.stopAll();
-            }
+            Control.Instance.keyboardInput(e);
         }
 
         /// <summary>

@@ -223,14 +223,31 @@ namespace PhotoPaint
             // snap image pieces
             if (sender.Equals(imageItem))
             {
+                
                 // check for each island
                 for (int i = 0; i < Control.Instance.playerList.players.Count(); i++)
                 {
+
                     x2 = Control.Instance.playerList.players[i].island.imageSlot.Center.X;
                     y2 = Control.Instance.playerList.players[i].island.imageSlot.Center.Y;
 
                     if (Math.Pow(Math.Abs(x1 - x2), 2) + Math.Pow(Math.Abs(y1 - y2), 2) < Math.Pow(distance, 2))
                     {
+
+                        bool cancel = false;
+                        foreach (Article article in Control.Instance.articleList.articles)
+                        {
+                            if (article.imageOwner == Control.Instance.playerList.players[i] && (article.status == 1 || article.status == 2))
+                            {
+                                cancel = true;
+                                break;
+                            }
+                        }
+                        if (cancel)
+                        {
+                            break;
+                        }
+
                         sender.Center = Control.Instance.playerList.players[i].island.imageSlot.Center;
                         sender.Orientation = Control.Instance.playerList.players[i].island.orientation;
                         imageOwner = Control.Instance.playerList.players[i];
@@ -245,11 +262,27 @@ namespace PhotoPaint
                 // check for each island
                 for (int i = 0; i < Control.Instance.playerList.players.Count(); i++)
                 {
+
                     x2 = Control.Instance.playerList.players[i].island.textSlot.Center.X;
                     y2 = Control.Instance.playerList.players[i].island.textSlot.Center.Y;
 
                     if (Math.Pow(Math.Abs(x1 - x2), 2) + Math.Pow(Math.Abs(y1 - y2), 2) < Math.Pow(distance, 2))
                     {
+
+                        bool cancel = false;
+                        foreach (Article article in Control.Instance.articleList.articles)
+                        {
+                            if (article.textOwner == Control.Instance.playerList.players[i] && (article.status == 1 || article.status == 2))
+                            {
+                                cancel = true;
+                                break;
+                            }
+                        }
+                        if (cancel)
+                        {
+                            break;
+                        }
+
                         sender.Center = Control.Instance.playerList.players[i].island.textSlot.Center;
                         sender.Orientation = Control.Instance.playerList.players[i].island.orientation;
                         textOwner = Control.Instance.playerList.players[i];
@@ -280,8 +313,16 @@ namespace PhotoPaint
             //Point endPoint = new Point(Control.Instance.rnd.Next(1920), Control.Instance.rnd.Next(1080));
 
             List<Point> possiblePoints = new List<Point>();
-            possiblePoints.Add(new Point(Control.Instance.rnd.Next(islandSize[1] + 200, 1920 - 200 - islandSize[1]),
-                                         Control.Instance.rnd.Next(islandSize[1] + 200, 1080 - 200 - islandSize[1])));
+            if (Control.Instance.players3and4)
+            {
+                possiblePoints.Add(new Point(Control.Instance.rnd.Next(islandSize[1] + 200, 1920 - 200 - islandSize[1]),
+                                             Control.Instance.rnd.Next(islandSize[1] + 200, 1080 - 200 - islandSize[1])));
+            }
+            else
+            {
+                possiblePoints.Add(new Point(Control.Instance.rnd.Next(islandSize[1] + 200, 1920 - 200 - islandSize[1]),
+                                             Control.Instance.rnd.Next(0, 1080)));
+            }
             possiblePoints.Add(new Point(Control.Instance.rnd.Next(0, islandSize[1] - 200), Control.Instance.rnd.Next(0, islandSize[1] - 200)));
             possiblePoints.Add(new Point(Control.Instance.rnd.Next(0, islandSize[1] - 200), Control.Instance.rnd.Next(1080 - islandSize[1] + 200, 1080)));
             possiblePoints.Add(new Point(Control.Instance.rnd.Next(1920 - islandSize[1] + 200, 1920), Control.Instance.rnd.Next(0, islandSize[1] - 200)));

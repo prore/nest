@@ -33,7 +33,7 @@ namespace PhotoPaint
         private String path;
         public int playerNumber;
 
-        private Brush color;
+        public Brush color;
 
         //private int posX, imageX, textX, y;
 
@@ -577,10 +577,24 @@ namespace PhotoPaint
             Image img1 = new Image();
             listImages[nextIndexToChange].Content = img1;
             ((Image)listImages[nextIndexToChange].Content).Source = new BitmapImage(new Uri(finishedArticles[finishedArticles.Count() - 1].nameID));
-            listImages[nextIndexToChange].Background = finishedArticles[finishedArticles.Count() - 1].imageOwner.island.color;
+            if (Control.Instance.pointMode)
+            {
+                listImages[nextIndexToChange].Background = finishedArticles[finishedArticles.Count() - 1].imageOwner.island.color;
+            }
+            else
+            {
+                listImages[nextIndexToChange].Background = Brushes.White;
+            }
 
             listTexts[nextIndexToChange].Content = finishedArticles[finishedArticles.Count() - 1].textItem.Content;
-            listTexts[nextIndexToChange].Background = finishedArticles[finishedArticles.Count() - 1].imageOwner.island.color;
+            if (Control.Instance.pointMode)
+            {
+                listTexts[nextIndexToChange].Background = finishedArticles[finishedArticles.Count() - 1].imageOwner.island.color;
+            }
+            else
+            {
+                listTexts[nextIndexToChange].Background = Brushes.White;
+            }
 
             // show new article
 
