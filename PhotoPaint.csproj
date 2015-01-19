@@ -120,6 +120,14 @@
     <Resource Include="Resources\Articles\article3.txt" />
     <Resource Include="Resources\Articles\article4.txt" />
     <Resource Include="Resources\Articles\article5.txt" />
+    <Resource Include="Resources\island_sand.png" />
+    <Resource Include="Resources\island_sand2.png" />
+    <Resource Include="Resources\imageSlot.png" />
+    <Resource Include="Resources\textSlot.png" />
+    <Resource Include="Resources\player_red.png" />
+    <Resource Include="Resources\player_blue.png" />
+    <Resource Include="Resources\player_green.png" />
+    <Resource Include="Resources\player_magenta.png" />
     <Content Include="Resources\video.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

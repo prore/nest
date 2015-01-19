@@ -38,17 +38,17 @@ namespace PhotoPaint
         //private int posX, imageX, textX, y;
 
         //private int[] islandSize           = new int[] { 450, 250 };
-        private int[] islandSize           = new int[] { 561, 295 };
+        public int[] islandSize            = new int[] { 561, 295 };
         private int[] textSlotSize         = new int[] { 170,  80 };
         private int[] imageSlotSize        = new int[] { 170, 128 };
         private int[] finishedArticlesSize = new int[] { 234, 224 };
         //private int[] pointDisplaySize     = new int[] {  50,  50 };
         private int[] pointDisplaySize     = new int[] { 59,   58 };
 
-        private int[] textSlotOffset         = new int[] {-125,   70 };
-        private int[] imageSlotOffset        = new int[] {-125,  -50 };
-        private int[] finishedArticlesOffset = new int[] {  92,    2 };
-        private int[] pointDisplayOffset     = new int[] {   0,  140 };
+        private int[] textSlotOffset         = new int[] {-125,   50 };
+        private int[] imageSlotOffset        = new int[] {-125,  -70 };
+        private int[] finishedArticlesOffset = new int[] {  92,   22 };
+        private int[] pointDisplayOffset     = new int[] {   0,  130 };
 
         private int[] tableResolution = new int[] { 1920, 1080 };
 

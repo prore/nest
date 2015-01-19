@@ -273,7 +273,30 @@ namespace PhotoPaint
 
             Storyboard stb = new Storyboard();
             PointAnimation moveCenter = new PointAnimation();
-            Point endPoint = new Point(Control.Instance.rnd.Next(1920), Control.Instance.rnd.Next(1080));
+
+            // find a point to move to without crossing an island
+            
+            int[] islandSize = new int[] { 561, 295 };
+            //Point endPoint = new Point(Control.Instance.rnd.Next(1920), Control.Instance.rnd.Next(1080));
+
+            List<Point> possiblePoints = new List<Point>();
+            possiblePoints.Add(new Point(Control.Instance.rnd.Next(islandSize[1] + 200, 1920 - 200 - islandSize[1]),
+                                         Control.Instance.rnd.Next(islandSize[1] + 200, 1080 - 200 - islandSize[1])));
+            possiblePoints.Add(new Point(Control.Instance.rnd.Next(0, islandSize[1] - 200), Control.Instance.rnd.Next(0, islandSize[1] - 200)));
+            possiblePoints.Add(new Point(Control.Instance.rnd.Next(0, islandSize[1] - 200), Control.Instance.rnd.Next(1080 - islandSize[1] + 200, 1080)));
+            possiblePoints.Add(new Point(Control.Instance.rnd.Next(1920 - islandSize[1] + 200, 1920), Control.Instance.rnd.Next(0, islandSize[1] - 200)));
+            possiblePoints.Add(new Point(Control.Instance.rnd.Next(1920 - islandSize[1] + 200, 1920), Control.Instance.rnd.Next(1080 - islandSize[1] + 200, 1080)));
+
+            Point endPoint;
+            if (item.Center.X < islandSize[1] || item.Center.X > 1920 - islandSize[1] || item.Center.Y < islandSize[1] || item.Center.Y > 1080 - islandSize[1])
+            {
+                endPoint = possiblePoints[0];
+            }
+            else
+            {
+                endPoint = possiblePoints[Control.Instance.rnd.Next(4)];
+            }
+
             //Point endPoint = new Point(1024 / 2, 768 / 2);
             if (item.ActualCenter.X > -1)
             {
@@ -296,13 +319,14 @@ namespace PhotoPaint
             }
             //rotates to a rnd orientation between 0 and 360
             turnAnimation.To = Control.Instance.rnd.NextDouble() * 360;
-            turnAnimation.Duration = new Duration(TimeSpan.FromSeconds(10.0)); //same duration as movement
+            int timespan = Control.Instance.rnd.Next(10, 12);
+            turnAnimation.Duration = new Duration(TimeSpan.FromSeconds(timespan)); //same duration as movement
             stb.Children.Add(turnAnimation);
             Storyboard.SetTarget(turnAnimation, item);
             Storyboard.SetTargetProperty(turnAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
              
             moveCenter.To = endPoint;
-            moveCenter.Duration = new Duration(TimeSpan.FromSeconds(10.0));
+            moveCenter.Duration = new Duration(TimeSpan.FromSeconds(timespan));
             moveCenter.FillBehavior = FillBehavior.Stop;
             stb.Children.Add(moveCenter);
             Storyboard.SetTarget(moveCenter, item);
