@@ -27,7 +27,7 @@ namespace NeSt
     /// <summary>
     /// Interaction logic for Window1.xaml.
     /// </summary>
-    public partial class Window1 : SurfaceWindow
+    public partial class Window1 : Window
     {
 
 

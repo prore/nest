@@ -68,10 +68,10 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>3CAFCD7440FC581A084FA4085706001365653AD6</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>4703B2D186AC6260FBDB6B7A1A838D1AAEABBA57</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>NeSt_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>NeSt_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -230,6 +230,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="NeSt_1_TemporaryKey.pfx" />
     <None Include="NeSt_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
