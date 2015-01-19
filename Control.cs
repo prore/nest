@@ -119,6 +119,8 @@ namespace NeSt
             menuText += Environment.NewLine;
             menuText += Environment.NewLine;
             menuText += "[Esc] Menü verlassen";
+            menuText += Environment.NewLine;
+            menuText += "[E] Spiel beenden";
             menu.Content = menuText;
         }
 
@@ -314,6 +316,11 @@ namespace NeSt
                     players3and4 = !players3and4;
                     updateMenu();
                 }
+                else if (e.Key == Key.E)
+                {
+                    Application.Current.Shutdown();   
+                }
+
             }
 
         }
