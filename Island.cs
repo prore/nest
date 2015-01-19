@@ -37,11 +37,13 @@ namespace PhotoPaint
 
         //private int posX, imageX, textX, y;
 
-        private int[] islandSize           = new int[] { 450, 250 };
+        //private int[] islandSize           = new int[] { 450, 250 };
+        private int[] islandSize           = new int[] { 561, 295 };
         private int[] textSlotSize         = new int[] { 170,  80 };
         private int[] imageSlotSize        = new int[] { 170, 128 };
         private int[] finishedArticlesSize = new int[] { 234, 224 };
-        private int[] pointDisplaySize     = new int[] {  50,  50 };
+        //private int[] pointDisplaySize     = new int[] {  50,  50 };
+        private int[] pointDisplaySize     = new int[] { 59,   58 };
 
         private int[] textSlotOffset         = new int[] {-125,   70 };
         private int[] imageSlotOffset        = new int[] {-125,  -50 };
@@ -199,7 +201,7 @@ namespace PhotoPaint
             BitmapImage img = new BitmapImage();
             //load the image from a local resource
             img.BeginInit();
-            img.UriSource = new Uri("pack://application:,,,/Resources/" + "island_yellow.png", UriKind.Absolute);
+            img.UriSource = new Uri("pack://application:,,,/Resources/" + "island_sand2.png", UriKind.Absolute);
             img.EndInit();
 
             island.Background = new ImageBrush(img);
@@ -239,16 +241,25 @@ namespace PhotoPaint
             imageSlot.CanRotate = false;
             imageSlot.CanScale = false;
             //imageSlot.IsEnabled = false;
+            imageSlot.ShowsActivationEffects = false;
+            imageSlot.Loaded += makeTransparent;
 
             imageSlot.Background = new SolidColorBrush(Colors.Transparent);
 
             BitmapImage img = new BitmapImage();
             //load the image from a local resource
             img.BeginInit();
-            img.UriSource = new Uri("pack://application:,,,/Resources/" + "example_transparent.png", UriKind.Absolute);
+            img.UriSource = new Uri("pack://application:,,,/Resources/" + "imageSlot.png", UriKind.Absolute);
             img.EndInit();
 
             imageSlot.Background = new ImageBrush(img);
+
+            imageSlot.Content = "Bild hier ablegen";
+            imageSlot.VerticalContentAlignment = VerticalAlignment.Center;
+            imageSlot.HorizontalContentAlignment = HorizontalAlignment.Center;
+            imageSlot.FontFamily = new FontFamily("Poiret One");
+            imageSlot.FontSize = 14;
+            //imageSlot.Foreground = Brushes.DarkGoldenrod;
 
             //imageSlot.ShowsActivationEffects = false;
             //RoutedEventHandler loadedEventHandler = null;
@@ -271,12 +282,30 @@ namespace PhotoPaint
             textSlot.Orientation = orientation;
 
             textSlot.Background = Brushes.Transparent;
+            textSlot.Loaded += makeTransparent;
 
             textSlot.CanMove = false;
             textSlot.CanRotate = false;
             textSlot.CanScale = false;
             //textSlot.IsEnabled = false;
             textSlot.ShowsActivationEffects = false;
+
+            textSlot.Background = new SolidColorBrush(Colors.Transparent);
+
+            img = new BitmapImage();
+            //load the image from a local resource
+            img.BeginInit();
+            img.UriSource = new Uri("pack://application:,,,/Resources/" + "textSlot.png", UriKind.Absolute);
+            img.EndInit();
+
+            textSlot.Background = new ImageBrush(img);
+
+            textSlot.Content = "Headline hier ablegen";
+            textSlot.VerticalContentAlignment = VerticalAlignment.Center;
+            textSlot.HorizontalContentAlignment = HorizontalAlignment.Center;
+            textSlot.FontFamily = new FontFamily("Poiret One");
+            textSlot.FontSize = 14;
+            //textSlot.Foreground = Brushes.DarkGoldenrod;
             
        }
 
@@ -301,6 +330,12 @@ namespace PhotoPaint
 
             finishedArticles.Background = Brushes.Transparent;
             //finishedArticles.Visibility = Visibility.Hidden; // object not really needed anymore
+            finishedArticles.FontFamily = new FontFamily("Poiret One");
+            finishedArticles.FontSize = 30;
+            finishedArticles.Padding = new Thickness(10);
+            finishedArticles.HorizontalContentAlignment = HorizontalAlignment.Center;
+
+            //finishedArticles.Content = "NEWS STREAM";
 
         }
 
@@ -327,8 +362,28 @@ namespace PhotoPaint
 
             pointDisplay.Content = 0;
 
-            //pointDisplay.Background = Brushes.Transparent;
-            pointDisplay.Background = color;
+            pointDisplay.Background = Brushes.Transparent;
+            pointDisplay.Loaded += makeTransparent;
+            //pointDisplay.Background = color;
+
+
+
+            pointDisplay.Background = new SolidColorBrush(Colors.Transparent);
+
+            BitmapImage img = new BitmapImage();
+            //load the image from a local resource
+            img.BeginInit();
+            string uri = "pack://application:,,,/Resources/" + "player_red.png";
+            if (color == Brushes.DarkBlue) uri = "pack://application:,,,/Resources/" + "player_blue.png"; else
+            if (color == Brushes.DarkGreen) uri = "pack://application:,,,/Resources/" + "player_green.png"; else
+            if (color == Brushes.DarkMagenta) uri = "pack://application:,,,/Resources/" + "player_magenta.png";
+            img.UriSource = new Uri(uri, UriKind.Absolute);
+            img.EndInit();
+
+            pointDisplay.Background = new ImageBrush(img);
+
+
+
             pointDisplay.Foreground = Brushes.White;
             pointDisplay.FontSize = 30;
             pointDisplay.HorizontalContentAlignment = HorizontalAlignment.Center;
