@@ -131,13 +131,16 @@ namespace PhotoPaint
             // show menu
             if (!menuShown)
             {
-                if (!mainScatterView.Items.Contains(menu))
+                if (e.Key == Key.Escape)
                 {
-                    mainScatterView.Items.Add(menu);
+                    if (!mainScatterView.Items.Contains(menu))
+                    {
+                        mainScatterView.Items.Add(menu);
+                    }
+                    menu.Visibility = Visibility.Visible;
+                    menu.ZIndex = 100;
+                    menuShown = true;
                 }
-                menu.Visibility = Visibility.Visible;
-                menu.ZIndex = 100;
-                menuShown = true;
             }
             else
             {
