@@ -576,7 +576,6 @@ namespace PhotoPaint
         /// blend in an item
         /// </summary>
         /// <parameter name="item">The item to blend in</parameter>
-        /// <parameter name="point">The point to move to</parameter>
         private void blend(ScatterViewItem item)
         {
             DoubleAnimation myDoubleAnimation = new DoubleAnimation();

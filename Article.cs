@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Diagnostics;
+using System.Threading;
 
 /*
  * represents an article with image and headline
@@ -385,20 +386,112 @@ namespace PhotoPaint
                     textOwner = null;
                     imageOwner = null;
                     break;
-                case 1: 
+                case 1:
+                    blend(textItem, false);
                     textItem.Center  = new Point(1920 / 2, 1080 / 2);
                     moveItem(textItem);
                     break;
-                case 2: 
+                case 2:
+                    blend(imageItem, false);
                     imageItem.Center  = new Point(1920 / 2, 1080 / 2);
                     moveItem(imageItem);
                     break;
                 case 3:
-                    imageItem.Center = new Point(-1000, -1000);
-                    textItem.Center  = new Point(-1000, -1000);
+                    //shrink(imageItem);
+                    blend(imageItem, true);
+                    moveTo(imageItem, imageOwner.island.finishedArticles.Center);
+                    //shrink(textItem);
+                    blend(textItem, true);
+                    moveTo(textItem, imageOwner.island.finishedArticles.Center);
                     break;
             }
             status = statusNew;
+        }
+
+        /// <summary>
+        /// blend in/out an item
+        /// </summary>
+        /// <parameter name="item">The item to blend in/out</parameter>
+        /// <parameter name="blendIn">If the item will be blended in or out</parameter>
+        private void blend(ScatterViewItem item, bool blendIn)
+        {
+            DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+            if (blendIn)
+            {
+                myDoubleAnimation.From = 1.0;
+                myDoubleAnimation.To = 0.0;
+                myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(0.25));
+            }
+            else
+            {
+                myDoubleAnimation.From = 0.0;
+                myDoubleAnimation.To = 1.0;
+                myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(1.0));
+            }
+            myDoubleAnimation.FillBehavior = FillBehavior.Stop;
+            Storyboard myStoryboard;
+            myStoryboard = new Storyboard();
+            myStoryboard.Children.Add(myDoubleAnimation);
+            Storyboard.SetTarget(myDoubleAnimation, item);
+            Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath(ScatterViewItem.OpacityProperty));
+            myStoryboard.Begin(Control.Instance.window1, true);
+
+            if (blendIn)
+            {
+                item.Opacity = 0.0;
+            }
+            else
+            {
+                item.Opacity = 1.0;
+            }
+        }
+
+        /// <summary>
+        /// shrink an item
+        /// </summary>
+        /// <parameter name="item">The item to shrink</parameter>
+        private void shrink(ScatterViewItem item) // does not work
+        {
+            DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+            //myDoubleAnimation.From = item.ActualWidth;
+            myDoubleAnimation.To = 1;
+            myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+            Storyboard myStoryboard;
+            myStoryboard = new Storyboard();
+            myStoryboard.Children.Add(myDoubleAnimation);
+            Storyboard.SetTarget(myDoubleAnimation, item);
+            Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath(ScaleTransform.ScaleXProperty));
+            myStoryboard.Begin();
+        }
+
+        /// <summary>
+        /// move item to a given point
+        /// </summary>
+        /// <parameter name="item">The item to move</parameter>
+        /// <parameter name="point">The point to move to</parameter>
+        private void moveTo(ScatterViewItem item, Point point)
+        {
+            Storyboard stb = new Storyboard();
+            PointAnimation moveCenter = new PointAnimation();
+            Point endPoint = point;
+            moveCenter.To = endPoint;
+            moveCenter.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+            moveCenter.FillBehavior = FillBehavior.Stop;
+            stb.Children.Add(moveCenter);
+            Storyboard.SetTarget(moveCenter, item);
+            Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
+            stb.Completed += new EventHandler((sender, e) => resetPieces(sender, e, item));
+            stb.Begin(Control.Instance.window1, true);
+            item.Center = endPoint;
+        }
+
+        /// <summary>
+        /// reset a piece after it's animation
+        /// </summary>
+        private void resetPieces(object sender, EventArgs e, ScatterViewItem item)
+        {
+            item.Center = new Point(-1000, -1000);
+            item.Opacity = 1;
         }
 
     }
