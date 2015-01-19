@@ -7,7 +7,7 @@ using System.Text;
  * contains the last few articles that were finished
  */
 
-namespace PhotoPaint
+namespace NeSt
 {
     class FinishedArticles
     {

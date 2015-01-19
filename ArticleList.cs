@@ -9,7 +9,7 @@ using System.Windows;
  * List of articles
  */
 
-namespace PhotoPaint
+namespace NeSt
 {
     class ArticleList
     {

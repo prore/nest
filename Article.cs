@@ -17,7 +17,7 @@ using System.Threading;
  * represents an article with image and headline
  */
 
-namespace PhotoPaint
+namespace NeSt
 {
     class Article
     {
@@ -555,7 +555,7 @@ namespace PhotoPaint
         /// </summary>
         private void resetPieces(object sender, EventArgs e, ScatterViewItem item)
         {
-            item.Center = new Point(-1000, -1000);
+            item.Center = new Point(10000, 10000);
             item.Opacity = 1;
         }
 

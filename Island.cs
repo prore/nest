@@ -17,7 +17,7 @@ using System.Windows.Media.Animation;
  * a players island
  */
 
-namespace PhotoPaint
+namespace NeSt
 {
     class Island 
     {

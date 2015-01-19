@@ -12,7 +12,7 @@ using System.Windows.Media;
  * Implemented as singelton
  */
 
-namespace PhotoPaint
+namespace NeSt
 {
     class Control
     {

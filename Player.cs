@@ -8,7 +8,7 @@ using Microsoft.Surface.Presentation.Controls;
  * represents a player of the game
  */
 
-namespace PhotoPaint
+namespace NeSt
 {
     class Player
     {

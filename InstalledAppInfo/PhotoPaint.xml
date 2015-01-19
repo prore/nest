@@ -5,7 +5,7 @@
   <Application>
     <Title>Photo Paint</Title>
     <Description>Uses SurfaceInkCanvas in conjuction with media</Description>
-    <ExecutableFile>PhotoPaint.exe</ExecutableFile>
+    <ExecutableFile>NeSt.exe</ExecutableFile>
     <Arguments></Arguments>
     <IconImageFile>InstalledAppInfo\AppIcon.png</IconImageFile>   
   </Application>

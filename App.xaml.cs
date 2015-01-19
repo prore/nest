@@ -1,4 +1,4 @@
-namespace PhotoPaint
+namespace NeSt
 {
     /// <summary>
     /// Interaction logic for App.xaml
