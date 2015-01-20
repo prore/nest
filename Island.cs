@@ -62,6 +62,9 @@ namespace NeSt
         private int articlesToShow = 3; // how many articles should be shown in the list of the last finished articles
         private int nextIndexToChange = -1; // next index of article elements that gets rewritten
 
+        private List<Point> finishedArticleImagePositions = new List<Point>();
+        private List<Point> finishedArticleTextPositions = new List<Point>();
+
         //public Player player; //owner of this island
 
         /// <summary>
@@ -457,6 +460,8 @@ namespace NeSt
                                             positionBase[yValue] + finishedArticlesOffset[yValue] - startPositionOffset[1] + (imageSize[0] / 2) * imageIndentDirection);
                 }
 
+                finishedArticleTextPositions.Add(text.Center);
+
                 text.Orientation = orientation;
 
                 text.CanMove = false;
@@ -497,6 +502,8 @@ namespace NeSt
                     image.Center = new Point(text.Center.X,
                                              text.Center.Y - (text.Width / 2 + image.Width / 2) * imageIndentDirection);
                 }
+
+                finishedArticleImagePositions.Add(image.Center);
 
                 image.Orientation = orientation;
 
@@ -547,8 +554,17 @@ namespace NeSt
                 else
                 {
                     // move articles
-                    moveTo(listImages[i], listImages[i + 1].Center);
-                    moveTo(listTexts[i], listTexts[i + 1].Center);
+                    Point point1 = listImages[i + 1].Center;
+                    Point point2 = listTexts[i + 1].Center;
+                    if (!finishedArticleImagePositions.Contains(point1)) {
+                        // TODO do something to preven graphic errors
+                    }
+                    if (!finishedArticleTextPositions.Contains(point2))
+                    {
+                        // TODO do something to preven graphic errors
+                    }
+                    moveTo(listImages[i], point1);
+                    moveTo(listTexts[i], point2);
                 }
 
                 //listImages[i].Center = new Point(listImages[i + 1].Center.X, listImages[i + 1].Center.Y);
@@ -631,7 +647,7 @@ namespace NeSt
             PointAnimation moveCenter = new PointAnimation();
             Point endPoint = point;
             moveCenter.To = endPoint;
-            moveCenter.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+            moveCenter.Duration = new Duration(TimeSpan.FromSeconds(0.2));
             moveCenter.FillBehavior = FillBehavior.Stop;
             stb.Children.Add(moveCenter);
             Storyboard.SetTarget(moveCenter, item);

@@ -16,7 +16,7 @@ namespace NeSt
 
         public List<Article> articles;
 
-        public readonly int MAXON = 3; // How many articles should be available at the same time?
+        public readonly int MAXON = 4; // How many articles should be available at the same time?
         private int appearIndex; // index on which new images start to appear
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace NeSt
             Article article2 = null;
 
             // check requirement for next while loop
-            if (articles.Count() < MAXON + 3 + 2)
+            if (articles.Count() < MAXON + 3 + 2 + 1)
             {
                 MessageBox.Show("Not enough articles found");
                 return;

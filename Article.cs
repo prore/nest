@@ -56,8 +56,8 @@ namespace NeSt
             textOwner = null;
 
             // create image and text object
-            imageItem = new ScatterViewItem();
-            textItem  = new ScatterViewItem();
+            imageItem = new BoundingScatterViewItem();
+            textItem = new BoundingScatterViewItem();
             createImage(path);
             createText(path.Substring(0, path.Length - 4) + @".txt");
 
@@ -228,6 +228,7 @@ namespace NeSt
                 // check for each island
                 for (int i = 0; i < Control.Instance.playerList.players.Count(); i++)
                 {
+                    if (Control.Instance.playerList.players[i].island.imageSlot.IsVisible == false) { break; }
 
                     x2 = Control.Instance.playerList.players[i].island.imageSlot.Center.X;
                     y2 = Control.Instance.playerList.players[i].island.imageSlot.Center.Y;
@@ -263,6 +264,8 @@ namespace NeSt
                 // check for each island
                 for (int i = 0; i < Control.Instance.playerList.players.Count(); i++)
                 {
+                    
+                    if (Control.Instance.playerList.players[i].island.imageSlot.IsVisible == false) { break; }
 
                     x2 = Control.Instance.playerList.players[i].island.textSlot.Center.X;
                     y2 = Control.Instance.playerList.players[i].island.textSlot.Center.Y;
@@ -563,4 +566,27 @@ namespace NeSt
         }
 
     }
+    class BoundingScatterViewItem : ScatterViewItem
+    {
+        public BoundingScatterViewItem()
+        {
+            //this.IsManipulationEnabled = false;
+            this.AddHandler(UIElement.ManipulationDeltaEvent, new EventHandler<ManipulationDeltaEventArgs>(BoundingScatterViewItem_ManipulationDelta), true);
+
+        }
+
+        void BoundingScatterViewItem_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        {
+            //remove large inertia values
+            if (e.IsInertial)
+            {
+                if (e.CumulativeManipulation.Translation.X > 5 ||
+                    e.CumulativeManipulation.Translation.Y > 5)
+                {
+                    e.Complete();
+                }
+            }
+        }
+    }
+
 }
