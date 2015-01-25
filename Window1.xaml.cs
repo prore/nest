@@ -130,7 +130,7 @@ namespace NeSt
             // unless the user has deliberately moved them.
             string publicFoldersPath = Environment.GetEnvironmentVariable("public");
             //string path = publicFoldersPath + @"\Pictures\Sample Pictures";
-            string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location.ToString()) + @"\Resources\Articles";
+            string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location.ToString()) + @"\..\..\Resources\Articles";
 
             //Load images and texts from Resource Folder
             //string path = @"pack://application:,,,/Resources/Articles";
