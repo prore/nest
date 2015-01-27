@@ -16,7 +16,8 @@ namespace NeSt
 
         public List<Article> articles;
 
-        public readonly int MAXON = 4; // How many articles should be available at the same time?
+        public readonly int MAXON = 5; // How many articles should be available at the same time?
+
         private int appearIndex; // index on which new images start to appear
 
         /// <summary>

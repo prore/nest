@@ -63,9 +63,9 @@ namespace NeSt
 
             // article pieces are not visible from the start
             status = 0;
-     //       imageItem.Center = new Point(-1000, -1000);
+            imageItem.Center = new Point(-1000, -1000);
             imageItem.Visibility = Visibility.Hidden;
-     //       textItem.Center  = new Point(-1000, -1000);
+            textItem.Center  = new Point(-1000, -1000);
             textItem.Visibility = Visibility.Hidden;
         }
 
@@ -456,15 +456,15 @@ namespace NeSt
                     imageOwner = null;
                     break;
                 case 1:
-                    blend(textItem, false);
+                    textItem.Center = new Point(1920 / 2, 1080 / 2);
                     textItem.Visibility = Visibility.Visible;
-                    textItem.Center  = new Point(1920 / 2, 1080 / 2);
+                    blend(textItem, false);
                     moveItem(textItem);
                     break;
                 case 2:
-                    blend(imageItem, false);
+                    imageItem.Center = new Point(1920 / 2, 1080 / 2);
                     imageItem.Visibility = Visibility.Visible;
-                    imageItem.Center  = new Point(1920 / 2, 1080 / 2);
+                    blend(imageItem, false);
                     moveItem(imageItem);
                     break;
                 case 3:
@@ -561,7 +561,7 @@ namespace NeSt
         /// </summary>
         private void resetPieces(object sender, EventArgs e, ScatterViewItem item)
         {
-            item.Center = new Point(10000, 10000);
+            item.Center = new Point(-1000, -1000);
             item.Opacity = 1;
         }
 
